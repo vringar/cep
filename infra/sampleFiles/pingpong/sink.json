@@ -1,0 +1,19 @@
+{
+  "name": "pong",
+  "config": {
+    "connector.class": "io.zeebe.kafka.connect.ZeebeSinkConnector",
+    "tasks.max": "1",
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": false,
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": false,
+    "topics": "toZeebe",
+    "zeebe.client.broker.contactPoint": "zeebe:26500",
+    "zeebe.client.requestTimeout": "10000",
+    "zeebe.client.security.plaintext": true,
+    "message.path.messageName": "$.name",
+    "message.path.correlationKey": "$.key",
+    "message.path.variables": "$.payload",
+    "message.path.timeToLive": "$.ttl"
+  }
+}

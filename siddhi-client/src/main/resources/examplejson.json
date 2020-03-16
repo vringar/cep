@@ -1,0 +1,4 @@
+{
+  "hostaddress": "https://127.0.0.1:9443/",
+  "siddhi-files": ["/home/lindnerm/IdeaProjects/SiddhiRestClient/src/main/resources/test.txt", "/home/lindnerm/IdeaProjects/SiddhiRestClient/src/main/resources/test2.txt"]
+}

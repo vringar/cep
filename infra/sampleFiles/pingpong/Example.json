@@ -1,0 +1,16 @@
+{
+  "key": 2251799813685269,
+  "type": "ping",
+  "customHeaders": { "topic": "toSiddhi" },
+  "workflowInstanceKey": 2251799813685261,
+  "bpmnProcessId": "ping-pong",
+  "workflowDefinitionVersion": 1,
+  "workflowKey": 2251799813685254,
+  "elementId": "ServiceTask_1sx6rbe",
+  "elementInstanceKey": 2251799813685268,
+  "worker": "kafka-connector",
+  "retries": 3,
+  "deadline": 1578923156706,
+  "variables": "{\"foo\":\"bar\",\"key\":1234567,\"name\":\"pong\"}",
+  "variablesAsMap": { "foo": "bar", "key": 1234567, "name": "pong" }
+}

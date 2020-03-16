@@ -1,0 +1,63 @@
+@App:name('KafkaTest')
+
+
+@App:description('Lies lies and more lies')
+
+/*
+Testing the Sample:
+
+Run the docker-compose.yml with `docker-compose up`
+
+1. Deploying:
+is done via
+`curl -X PUT "https://localhost:9443/siddhi-apps" -H "accept: application/json" -H "Content-Type: text/plain" --data-binary @sampleFiles/KafkaTest.siddhi -u admin:admin -k`
+
+2. Sending Messages to Siddhi over Kafka
+`./bin/kafka-console-producer.sh --broker-list="172.19.0.3:9092" --topic="test"`
+(The script can be found in to offical kafka download,
+Change the broker-list argument to the IP-Adresse of kafka found in `docker network inspect infra_default`)
+
+3. The format of the input must be someting like:
+'Name:"Lars"'
+'Name:"Lara"'
+etc.
+
+Viewing the Results:
+Run `docker logs infra_siddhi_1`
+
+    Messages similar to the following would be shown on the console.
+[2020-01-09 14:21:56,725]  INFO {io.siddhi.core.stream.output.sink.LogSink} - KafkaTest : LowProductionAlertStream : Event{timestamp=1578579716720, data=[Lars], isExpired=false}
+*/
+
+@source(type='kafka',
+        topic.list='toSiddhi',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+        @map(type='json', fail.on.missing.attribute="false" , @attributes(key = "$.variablesAsMap.key", name = "$.variablesAsMap.name", type = "$.type") ))
+
+define stream InputStream(key int, name string, type string);
+
+@sink(type='log', @map(type='json', @payload("""{"type": {{type}}, "key": {{key}}, "name": {{name}}, payload: { "test": 234 } }""")))
+define stream LowProductionAlertStream(key int, name string, type string);
+
+@sink(type='kafka',
+        topic='toZeebe',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+        @map(type='json', @payload("""{"type": "{{type}}", "key": "{{key}}", "name": "{{name}}", "payload": { "test": 234 } }""")))
+define stream OutputStream(key int, name string, type string);
+/*@payload("""{"type": {{type}},"variablesAsMap": { "key": {{key}}, "name": {{name}} }}""")*/
+@info(name='outputQuery')
+from InputStream
+select *
+insert into LowProductionAlertStream;
+
+@info(name='roundtripQuery')
+from InputStream
+select *
+insert into OutputStream;
+

@@ -1,0 +1,4 @@
+.idea
+target
+!target/deployer-1.0-SNAPSHOT-jar-with-dependencies.jar
+*.iml

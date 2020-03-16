@@ -1,0 +1,83 @@
+@App:name("SecurityEvents")
+
+@App:description("Generate entered secure facility event")
+
+@source(type='kafka',
+        topic.list='doorEvents',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+	@map(type='json')
+)
+define stream DoorEventStream (doorID int, event string);
+
+@source(type='kafka',
+        topic.list='readerEvents',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+	@map(type='json')
+)
+define stream ReaderEventStream (readerID int, cardID int);
+
+
+@sink(type='kafka',
+        topic='roomUpdates',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+        @map(type='json', @payload("""{"name": "{{name}}", "payload": { "roomID": {{roomID}} } }""")))
+define stream RoomUpdateStream(name string, roomID int);
+
+
+/*
+ Employee entering the airlock from outside
+*/
+
+from every door1outer = ReaderEventStream[readerID == 1] ->
+ every DoorEventStream[doorID == 1 and event == "open" ] ->
+ every DoorEventStream[doorID == 1 and event == "close" ] ->
+ every door1inner = ReaderEventStream[readerID == 2 and door1outer.cardID == door1inner.cardID]
+ within 1 minute
+select door1inner.cardID
+insert into Airlock;
+
+/*
+ Employee leaving the airlock and going to the lab
+*/
+
+from every employee = Airlock -> 
+ every ReaderEventStream[readerID == 3 and cardID == employee.cardID] ->
+ every DoorEventStream[doorID == 2 and event == "open" ] ->
+ every DoorEventStream[doorID == 2 and event == "close" ] ->
+ every ReaderEventStream[readerID == 4 and cardID == employee.cardID]
+ within 15 minute
+select "RoomIsNotEmpty" as name, 42 as roomID
+insert into RoomUpdateStream;
+
+/*
+ Employee entering the airlock from inside the lab
+*/
+
+from every door2inner = ReaderEventStream[readerID == 4] ->
+ every DoorEventStream[doorID == 2 and event == "open" ] ->
+ every DoorEventStream[doorID == 2 and event == "close" ] ->
+ every ReaderEventStream[readerID == 3 and cardID == door2inner.cardID]
+ within 1 minute
+select door2inner.cardID as cardID
+insert into Airlock;
+
+/*
+ Remove employees leaving the room from EmployeesInSaferoom
+*/
+
+from every door1inner = ReaderEventStream[readerID == 4] ->
+ every DoorEventStream[doorID == 2 and event == "open" ] ->
+ every DoorEventStream[doorID == 2 and event == "close" ] ->
+ every ReaderEventStream[readerID == 3 and cardID == door1inner.cardID]
+ within 1 minute
+select "RoomIsEmpty" as name, 42 as roomID
+insert into RoomUpdateStream;

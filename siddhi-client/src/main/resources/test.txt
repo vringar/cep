@@ -1,0 +1,9 @@
+@app:name('Test1')
+
+define stream TempStream (deviceID long, roomNo int, temp double);
+
+@info(name = '5minAvgQuery')
+from TempStream#window.time(5 min)
+select roomNo, avg(temp) as avgTemp
+  group by roomNo
+insert into OutputStream;
