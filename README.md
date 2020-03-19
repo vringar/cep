@@ -15,7 +15,7 @@ Für 1.) solltet ihr folgende Dinge in eure Dokumentation integrieren:
 
 Workflow-Engines sind Softwaresysteme zur Überwachung und Steuerung von Prozessen basierend auf einem Modell. Während man in der Vergangenheit häufig nur einfache Geschäftsprozesse über Workflows abgewickelt hat, werden nach und nach die Anforderungen in Punkten wie beispielsweise Geschwindigkeit und Parallelität immer höher durch neue Anwendungsgebiete. Aus diesen Anwendungsgebieten gehen momentan leistungsfähigere Workflow-Engines, wie Zeebe, hervor.
 Diese Workflow-Engines sind allerdings auf sehr atomare Formen von Events beschränkt und erfordern somit teils sehr umständliche Modellierungen, um komplexere Zusammenhänge zwischen Events darzustellen. Um diese Komplexität besser handhaben zu können, kann man Complex Event Processing (CEP) einsetzen. Dieses ermöglicht es Daten in sinnvolle Informationen umzuwandeln und atomare Events in komplexe Events zu fassen.
-Dieses Produkt setzt die Zusammenschaltung zwischen der Workflow-Engine Zeebe und der CEP-Engine Siddhi um. Hierbei ermöglicht es auf eine einfache Weise CEP-Funktionalitäten in Zeebe-Workflows einzusetzen. (Irgendwas zu Cloud Native, Talken wir auch über Kafka als Möglichkeit neue Features zu integrieren?)
+Dieses Produkt setzt die Zusammenschaltung zwischen der Workflow-Engine Zeebe und der CEP-Engine Siddhi um. Hierbei ermöglicht es auf eine einfache Weise CEP-Funktionalitäten in Zeebe-Workflows einzusetzen. (TODO: Irgendwas zu Cloud Native, Talken wir auch über Kafka als Möglichkeit neue Features zu integrieren?)
 
 - [ ] Beschreibung des Systemumfangs
      - [ ] Machbarkeitsstudie
@@ -37,15 +37,28 @@ Für 2.):
 
 - [ ] Systemanforderungen
    - [ ] Docker
+   
+   xkcd.com/1988
    - [ ] Java
 - [ ] Beschreibung des Setups
    - [ ] Startup skript ausbauen und dokumentieren
 - [ ] Architekturdokumentation
     - [ ] Diagramm
+    ![alt text](./cep_architecture_diagram.png "CEP Architektur")    
     - [ ] Kafka erklären
+    
+    Apache Kafka ist ein System, das eine Schnittstelle für Datenströme verschiedener Systeme bereitstellt. In unserem Fall werden explizite Zeebe Workflow Events und externe Events an Kafka übergeben, um dann von Siddhi gelesen zu werden, um komplexe Events zu erkennen. Siddhi übergibt die erkannten komplexen Events an Kafka, von wo sie von Zeebe gelesen werden und dann entsprechend in Workflowinstanzen behandelt werden.  
+    Der Vorteil Kafka statt einer eigenen Lösung zu Verbindung von Siddhi und Zeebe zu nutzen, ist, dass erstens schon für die verschiedenen notwendigen Operationen (Zeebe-zu-Kafka, Kafka-zu-Zeebe, Siddhi-zu-Kafka, Kafa-zu-Siddhi) schon Lösungen existieren, die genutzt werden können. Zweitens ist es so ohne größeres Refactoring mögliche externe Systeme an die verschiedenen Datenströme anzuschließen, so können z.B. erkannte komplexe Systeme in einer Datenbank geloggt werden.
+    
+    Die Verbindung zwischen Kafka und Siddhi wird über (TODO:docker-compose/docker-files?) gelöst; Siddhi benötigt nur noch einige JARs um die [siddhi-io-kafka](https://siddhi-io.github.io/siddhi-io-kafka/) Extension benutzen zu können.  
+    Die Verbindung zwischen Kafka und Zeebe wird mit [kafka-connect-zeebe](https://github.com/zeebe-io/kafka-connect-zeebe) realisiert. Dafür müssen von kafka-zeebe-connect benutzte Source- und Sink-Connector entsprechend den Workflows und Siddhi-Files konfiguriert werden.
     - [ ] Kafka connect
+    
+    (TODO: was ist mit dem Stichpunkt genau gemeint, soll hier kafka-connect-zeebe (das github projekt das wir benutzen) beschrieben werden?)    
     - [ ] Deployer Struktur
-          - [ ] Clients als Library einzeln verwendbar
+    ![alt text](./cep_with_deployer.png "Deployer Architektur") 
+        
+    - [ ] Clients als Library einzeln verwendbar
 - [ ] Verwendete Technologien/Ansätze
    - [ ] Apache Docker
    - [ ] Apache Java
