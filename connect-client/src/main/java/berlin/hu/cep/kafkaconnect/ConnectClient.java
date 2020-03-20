@@ -10,79 +10,37 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class ConnectClient
 {
 
-    public static void main( String[] args ) throws Exception
-    {
-        String json =
-                "{\n" +
-                        "    \"kafka_host\": \"http://localhost:8083/\",\n" +
-                        "    \"zeebe_client_broker_contactPoint\": \"zeebe:26500\",\n" +
-                        "    \"source_configs\":\n" +
-                        "    [\n" +
-                        "        {\n" +
-                        "            \"name\": \"some_ping_name\"\n" +
-                        "        }\n" +
-                        "    ],  \n" +
-                        "    \"sink_configs\":\n" +
-                        "    [\n" +
-                        "        {\n" +
-                        "            \"name\": \"some_pong_name\",\n" +
-                        "            \"topics\": \"some_topic_for_me\",\n" +
-                        "            \"message_path_messageName\": \"$.variablesAsMap.name\",\n" +
-                        "            \"message_path_correlationKey\": \"$.variablesAsMap.key\",\n" +
-                        "            \"message_path_variables\": \"$.variablesAsMap.payload\",\n" +
-                        "            \"message_path_timeToLive\": \"$.variablesAsMap.ttl\"\n" +
-                        "        }\n" +
-                        "    ]\n" +
-                        "}";
+    private ZeebeConnectConfig m_config;
 
-        ObjectMapper object_mapper = new ObjectMapper();
-        ConnectConfig config = object_mapper.readValue(json, ConnectConfig.class);
-        ConnectClient cc = new ConnectClient(config);
-        cc.deploy();
-        cc.delete();
-    }
-
-    public ConnectClient(ConnectConfig config)
+    public ConnectClient(ZeebeConnectConfig config)
     {
         m_config = config;
-        m_deployed = false;
+    }
+
+    private String get_connector_url() {
+        String connect_host = m_config.connector_host;
+        String connect_port = m_config.connector_port;
+        return "http://" + connect_host + ":" + connect_port;
     }
 
     public void deploy() throws Exception
     {
-        if(m_deployed)
-        {
-            throw new Exception("already deployed");
+        for(SinkConfig sink_config : m_config.sink_configs){
+            post(sink_config.getJson(m_config.zeebe_client_broker_contactPoint), get_connector_url());
         }
-        for(SinkConfig sink_config : m_config.sink_configs)
-        {
-            post(sink_config.getJson(m_config.zeebe_client_broker_contactPoint), m_config.kafka_host);
+        for(SourceConfig source_config : m_config.source_configs){
+            post(source_config.getJson(m_config.zeebe_client_broker_contactPoint), get_connector_url());
         }
-        for(SourceConfig source_config : m_config.source_configs)
-        {
-            post(source_config.getJson(m_config.zeebe_client_broker_contactPoint), m_config.kafka_host);
-        }
-        m_deployed = true;
     }
     public void delete() throws Exception
     {
-        if(!m_deployed)
-        {
-            throw new Exception("not deployed");
+        for(SinkConfig sink_config : m_config.sink_configs){
+            delete(sink_config.name, get_connector_url());
         }
-        for(SinkConfig sink_config : m_config.sink_configs)
-        {
-            delete(sink_config.name, m_config.kafka_host);
+        for(SourceConfig source_config : m_config.source_configs){
+            delete(source_config.name, get_connector_url());
         }
-        for(SourceConfig source_config : m_config.source_configs)
-        {
-            delete(source_config.name, m_config.kafka_host);
-        }
-        m_deployed = false;
     }
-
-    private ConnectConfig m_config;
-    private boolean m_deployed;
 
     private static void post(String json, String connector_url)
     {
@@ -111,10 +69,7 @@ public class ConnectClient
     }
 
 
-    private static void delete(
-            String name,
-            String connector_url
-    ) {
+    private static void delete(String name, String connector_url) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(connector_url)
                 .addConverterFactory(ScalarsConverterFactory.create())
@@ -139,4 +94,38 @@ public class ConnectClient
             ex.printStackTrace();
         }
     }
+
+    public static void main( String[] args ) throws Exception
+    {
+        final String json_configuration =
+                "{\n" +
+                        "\"connector_host\": \"localhost\", \n" +
+                        "\"connector_port\": \"8083\", \n" +
+                        "    \"zeebe_client_broker_contactPoint\": \"zeebe:26500\",\n" +
+                        "    \"source_configs\":\n" +
+                        "    [\n" +
+                        "        {\n" +
+                        "            \"name\": \"some_ping_name\"\n" +
+                        "        }\n" +
+                        "    ],  \n" +
+                        "    \"sink_configs\":\n" +
+                        "    [\n" +
+                        "        {\n" +
+                        "            \"name\": \"some_pong_name\",\n" +
+                        "            \"topics\": \"some_topic_for_me\",\n" +
+                        "            \"message_path_messageName\": \"$.variablesAsMap.name\",\n" +
+                        "            \"message_path_correlationKey\": \"$.variablesAsMap.key\",\n" +
+                        "            \"message_path_variables\": \"$.variablesAsMap.payload\",\n" +
+                        "            \"message_path_timeToLive\": \"$.variablesAsMap.ttl\"\n" +
+                        "        }\n" +
+                        "    ]\n" +
+                        "}";
+
+        ObjectMapper object_mapper = new ObjectMapper();
+        ZeebeConnectConfig config = object_mapper.readValue(json_configuration, ZeebeConnectConfig.class);
+        ConnectClient cc = new ConnectClient(config);
+        cc.deploy();
+        cc.delete();
+    }
+
 }
