@@ -20,6 +20,7 @@ public class SourceConfig
     public int zeebe_client_job_timeout = 5000;
     public String job_types = "sendMessage";
     public String job_header_topics = "kafka-topic";
+    public boolean mongoDB_logging = false;
 
     public String getJson(String zeebe_client_broker_contactPoint)
     {

@@ -19,6 +19,7 @@ public class SinkConfig
     public String message_path_correlationKey;
     public String message_path_variables;
     public String message_path_timeToLive;
+    public boolean mongoDB_logging = false;
 
     public String getJson(String zeebe_client_broker_contactPoint)
     {

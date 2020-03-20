@@ -16,23 +16,10 @@ public class ConnectClient
     public String connector_host;
     public String connector_port;
     public String mongoDB_url;
+    public String mongoDB_database;
     public String zeebe_client_broker_contactPoint;
     public List<SourceConfig> source_configs;
     public List<SinkConfig> sink_configs;
-
-    // public ConnectClient(String connect_host,String connect_port, ZeebeConnectConfig config)
-    // {
-    //     this.connect_host = connect_host;
-    //     this.connect_port = connect_port;
-    //     // m_config = config;
-    // }
-
-    // public ConnectClient(String connect_host,String connect_port, String mongoDB_url, ZeebeConnectConfig config){
-    //     this.connect_host = connect_host;
-    //     this.connect_port = connect_port;
-    //     this.mongoDB_url = mongoDB_url;
-    //     // m_config = config;
-    // }
 
     private String get_connector_url() {
         return "http://" + connector_host + ":" + connector_port;
@@ -42,18 +29,42 @@ public class ConnectClient
     {
         for(SinkConfig sink_config : sink_configs){
             post(sink_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
+            if(sink_config.mongoDB_logging){
+                MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
+                        sink_config.name + "-LOGGING",
+                        mongoDB_url,
+                        sink_config.topics,
+                        mongoDB_database,
+                        sink_config.name);
+                // post(mongo_config.getJson(), get_connector_url());
+            }
         }
         for(SourceConfig source_config : source_configs){
             post(source_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
+            if(source_config.mongoDB_logging){
+                MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
+                        source_config.name + "-LOGGING",
+                        mongoDB_url,
+                        source_config.job_header_topics,
+                        mongoDB_database,
+                        source_config.name);
+                // post(mongo_config.getJson(), get_connector_url());
+            }
         }
     }
     public void delete() throws Exception
     {
         for(SinkConfig sink_config : sink_configs){
             delete(sink_config.name, get_connector_url());
+            if(sink_config.mongoDB_logging){
+                delete(sink_config.name + "-LOGGING", get_connector_url());
+            }
         }
         for(SourceConfig source_config : source_configs){
             delete(source_config.name, get_connector_url());
+            if(source_config.mongoDB_logging){
+                delete(source_config.name + "-LOGGING", get_connector_url());
+            }
         }
     }
 
@@ -117,17 +128,20 @@ public class ConnectClient
                         "\"connector_host\": \"localhost\", \n" +
                         "\"connector_port\": \"8083\", \n" +
                         "\"mongoDB_url\" : \"mongodb://mongo:27017\", \n" +
+                        "\"mongoDB_database\" : \"Ping_Pong\", \n" +
                         "    \"zeebe_client_broker_contactPoint\": \"zeebe:26500\",\n" +
                         "    \"source_configs\":\n" +
                         "    [\n" +
                         "        {\n" +
-                        "            \"name\": \"some_ping_name\"\n" +
+                        "            \"name\": \"some_ping_name\",\n" +
+                        "            \"mongoDB_logging\": \"true\"\n" +
                         "        }\n" +
                         "    ],  \n" +
                         "    \"sink_configs\":\n" +
                         "    [\n" +
                         "        {\n" +
                         "            \"name\": \"some_pong_name\",\n" +
+                        "            \"mongoDB_logging\": \"true\",\n" +
                         "            \"topics\": \"some_topic_for_me\",\n" +
                         "            \"message_path_messageName\": \"$.variablesAsMap.name\",\n" +
                         "            \"message_path_correlationKey\": \"$.variablesAsMap.key\",\n" +
@@ -139,8 +153,12 @@ public class ConnectClient
 
         ObjectMapper object_mapper = new ObjectMapper();
         ConnectClient cc = object_mapper.readValue(json_configuration, ConnectClient.class);
-        cc.deploy();
-        cc.delete();
+        MongoDBConnectConfig mongo_config = new MongoDBConnectConfig("name", "dame", "krame", "habe", "sale");
+        String r = object_mapper.writeValueAsString(mongo_config);
+        System.out.println(r);
+        // mongo_config.getJson();
+        // cc.deploy();
+        // cc.delete();
     }
 
 }
