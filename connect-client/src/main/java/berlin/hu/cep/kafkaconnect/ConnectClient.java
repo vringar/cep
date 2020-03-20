@@ -1,43 +1,58 @@
 package berlin.hu.cep.kafkaconnect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import java.util.List;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConnectClient
 {
+    public String connector_host;
+    public String connector_port;
+    public String mongoDB_url;
+    public String zeebe_client_broker_contactPoint;
+    public List<SourceConfig> source_configs;
+    public List<SinkConfig> sink_configs;
 
-    private ZeebeConnectConfig m_config;
+    // public ConnectClient(String connect_host,String connect_port, ZeebeConnectConfig config)
+    // {
+    //     this.connect_host = connect_host;
+    //     this.connect_port = connect_port;
+    //     // m_config = config;
+    // }
 
-    public ConnectClient(ZeebeConnectConfig config)
-    {
-        m_config = config;
-    }
+    // public ConnectClient(String connect_host,String connect_port, String mongoDB_url, ZeebeConnectConfig config){
+    //     this.connect_host = connect_host;
+    //     this.connect_port = connect_port;
+    //     this.mongoDB_url = mongoDB_url;
+    //     // m_config = config;
+    // }
 
     private String get_connector_url() {
-        String connect_host = m_config.connector_host;
-        String connect_port = m_config.connector_port;
-        return "http://" + connect_host + ":" + connect_port;
+        return "http://" + connector_host + ":" + connector_port;
     }
 
     public void deploy() throws Exception
     {
-        for(SinkConfig sink_config : m_config.sink_configs){
-            post(sink_config.getJson(m_config.zeebe_client_broker_contactPoint), get_connector_url());
+        for(SinkConfig sink_config : sink_configs){
+            post(sink_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
         }
-        for(SourceConfig source_config : m_config.source_configs){
-            post(source_config.getJson(m_config.zeebe_client_broker_contactPoint), get_connector_url());
+        for(SourceConfig source_config : source_configs){
+            post(source_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
         }
     }
     public void delete() throws Exception
     {
-        for(SinkConfig sink_config : m_config.sink_configs){
+        for(SinkConfig sink_config : sink_configs){
             delete(sink_config.name, get_connector_url());
         }
-        for(SourceConfig source_config : m_config.source_configs){
+        for(SourceConfig source_config : source_configs){
             delete(source_config.name, get_connector_url());
         }
     }
@@ -101,6 +116,7 @@ public class ConnectClient
                 "{\n" +
                         "\"connector_host\": \"localhost\", \n" +
                         "\"connector_port\": \"8083\", \n" +
+                        "\"mongoDB_url\" : \"mongodb://mongo:27017\", \n" +
                         "    \"zeebe_client_broker_contactPoint\": \"zeebe:26500\",\n" +
                         "    \"source_configs\":\n" +
                         "    [\n" +
@@ -122,8 +138,7 @@ public class ConnectClient
                         "}";
 
         ObjectMapper object_mapper = new ObjectMapper();
-        ZeebeConnectConfig config = object_mapper.readValue(json_configuration, ZeebeConnectConfig.class);
-        ConnectClient cc = new ConnectClient(config);
+        ConnectClient cc = object_mapper.readValue(json_configuration, ConnectClient.class);
         cc.deploy();
         cc.delete();
     }
