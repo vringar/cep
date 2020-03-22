@@ -18,8 +18,8 @@ public class ConnectClient
     public String mongoDB_url;
     public String mongoDB_database;
     public String zeebe_client_broker_contactPoint;
-    public List<SourceConfig> source_configs;
-    public List<SinkConfig> sink_configs;
+    public List<ZeebeSourceConfig> source_configs;
+    public List<ZeebeSinkConfig> sink_configs;
 
     private String get_connector_url() {
         return "http://" + connector_host + ":" + connector_port;
@@ -28,45 +28,59 @@ public class ConnectClient
     public void deploy() throws Exception
     {
         ObjectMapper oj = new ObjectMapper();
-        for(SinkConfig sink_config : sink_configs){
-            post(sink_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
-            if(sink_config.mongoDB_logging){
+
+        //Deploy sink_configs
+        for(ZeebeSinkConfig sink_config : sink_configs){
+            sink_config.setZeebe_client_broker_contactPoint(zeebe_client_broker_contactPoint);
+            ConnectorPostObject config = new ConnectorPostObject(sink_config.getName(), sink_config);
+            String config_json = oj.writeValueAsString(config);
+            post(config_json, get_connector_url());
+            if(sink_config.isMongoDB_logging()){
                 MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
                         mongoDB_url,
-                        sink_config.topics,
+                        sink_config.getTopics(),
                         mongoDB_database,
-                        sink_config.name);
-                ConnectorPostObject post_object = new ConnectorPostObject(sink_config.name + "-LOGGING", mongo_config);
+                        config.getName());
+                ConnectorPostObject post_object = new ConnectorPostObject(config.getName() + "-LOGGING", mongo_config);
                 String json = oj.writeValueAsString(post_object);
                 post(json, get_connector_url());
             }
         }
-        for(SourceConfig source_config : source_configs){
-            post(source_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
-            if(source_config.mongoDB_logging){
+
+        //Deploy source configs
+        for(ZeebeSourceConfig source_config : source_configs){
+            source_config.setZeebe_client_broker_contactPoint(zeebe_client_broker_contactPoint);
+
+            ConnectorPostObject config = new ConnectorPostObject(source_config.getName(), source_config);
+            String config_json = oj.writeValueAsString(config);
+            post(config_json, get_connector_url());
+
+            if(source_config.isMongoDB_logging()){
                 MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
                         mongoDB_url,
-                        source_config.job_header_topics,
+                        source_config.getJob_header_topics(),
                         mongoDB_database,
-                        source_config.name);
-                ConnectorPostObject post_object = new ConnectorPostObject(source_config.name + "-LOGGING", mongo_config);
+                        config.getName());
+                ConnectorPostObject post_object = new ConnectorPostObject(config.getName() + "-LOGGING", mongo_config);
                 String json = oj.writeValueAsString(post_object);
                 post(json, get_connector_url());
             }
         }
     }
+
+
     public void delete() throws Exception
     {
-        for(SinkConfig sink_config : sink_configs){
-            delete(sink_config.name, get_connector_url());
-            if(sink_config.mongoDB_logging){
-                delete(sink_config.name + "-LOGGING", get_connector_url());
+        for(ZeebeSinkConfig sink_config : sink_configs){
+            delete(sink_config.getName(), get_connector_url());
+            if(sink_config.isMongoDB_logging()){
+                delete(sink_config.getName() + "-LOGGING", get_connector_url());
             }
         }
-        for(SourceConfig source_config : source_configs){
-            delete(source_config.name, get_connector_url());
-            if(source_config.mongoDB_logging){
-                delete(source_config.name + "-LOGGING", get_connector_url());
+        for(ZeebeSourceConfig source_config : source_configs){
+            delete(source_config.getName(), get_connector_url());
+            if(source_config.isMongoDB_logging()){
+                delete(source_config.getName() + "-LOGGING", get_connector_url());
             }
         }
     }
