@@ -27,28 +27,31 @@ public class ConnectClient
 
     public void deploy() throws Exception
     {
+        ObjectMapper oj = new ObjectMapper();
         for(SinkConfig sink_config : sink_configs){
             post(sink_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
             if(sink_config.mongoDB_logging){
                 MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
-                        sink_config.name + "-LOGGING",
                         mongoDB_url,
                         sink_config.topics,
                         mongoDB_database,
                         sink_config.name);
-                // post(mongo_config.getJson(), get_connector_url());
+                ConnectorPostObject post_object = new ConnectorPostObject(sink_config.name + "-LOGGING", mongo_config);
+                String json = oj.writeValueAsString(post_object);
+                post(json, get_connector_url());
             }
         }
         for(SourceConfig source_config : source_configs){
             post(source_config.getJson(zeebe_client_broker_contactPoint), get_connector_url());
             if(source_config.mongoDB_logging){
                 MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
-                        source_config.name + "-LOGGING",
                         mongoDB_url,
                         source_config.job_header_topics,
                         mongoDB_database,
                         source_config.name);
-                // post(mongo_config.getJson(), get_connector_url());
+                ConnectorPostObject post_object = new ConnectorPostObject(source_config.name + "-LOGGING", mongo_config);
+                String json = oj.writeValueAsString(post_object);
+                post(json, get_connector_url());
             }
         }
     }
@@ -133,14 +136,14 @@ public class ConnectClient
                         "    \"source_configs\":\n" +
                         "    [\n" +
                         "        {\n" +
-                        "            \"name\": \"some_ping_name\",\n" +
+                        "            \"name\": \"Zeebe_source\",\n" +
                         "            \"mongoDB_logging\": \"true\"\n" +
                         "        }\n" +
                         "    ],  \n" +
                         "    \"sink_configs\":\n" +
                         "    [\n" +
                         "        {\n" +
-                        "            \"name\": \"some_pong_name\",\n" +
+                        "            \"name\": \"Zeebe_sink\",\n" +
                         "            \"mongoDB_logging\": \"true\",\n" +
                         "            \"topics\": \"some_topic_for_me\",\n" +
                         "            \"message_path_messageName\": \"$.variablesAsMap.name\",\n" +
@@ -153,12 +156,8 @@ public class ConnectClient
 
         ObjectMapper object_mapper = new ObjectMapper();
         ConnectClient cc = object_mapper.readValue(json_configuration, ConnectClient.class);
-        MongoDBConnectConfig mongo_config = new MongoDBConnectConfig("name", "dame", "krame", "habe", "sale");
-        String r = object_mapper.writeValueAsString(mongo_config);
-        System.out.println(r);
-        // mongo_config.getJson();
-        // cc.deploy();
-        // cc.delete();
+        cc.deploy();
+        cc.delete();
     }
 
 }
