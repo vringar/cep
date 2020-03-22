@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.LinkedList;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MongoDBConnectConfig
+public class MongoDBConnectConfig extends ConnectorConfig
 {
     private String connector_class = "com.mongodb.kafka.connect.MongoSinkConnector";
     private int tasks_max = 1;

@@ -6,9 +6,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class ConnectorPostObject
 {
     private String name;
-    private MongoDBConnectConfig config;
+    private ConnectorConfig config;
 
-    public ConnectorPostObject(String name, MongoDBConnectConfig config){
+    public ConnectorPostObject(String name, ConnectorConfig config){
         this.name = name;
         this.config = config;
     }
@@ -23,7 +23,7 @@ public class ConnectorPostObject
     /**
      * @return the config
      */
-    public MongoDBConnectConfig getConfig() {
+    public ConnectorConfig getConfig() {
         return config;
     }
 }
