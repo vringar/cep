@@ -9,8 +9,7 @@ import java.util.LinkedList;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MongoDBConnectConfig
 {
-    private String name;
-    private String connector_class = "com.mongodb.kafka.MongoSinkConnector";
+    private String connector_class = "com.mongodb.kafka.connect.MongoSinkConnector";
     private int tasks_max = 1;
     private String connection_uri = "mongodb://mongo:27017";
     private List<String> topics;
@@ -21,22 +20,16 @@ public class MongoDBConnectConfig
     private String value_converter = "org.apache.kafka.connect.json.JsonConverter";
     private boolean value_converter_schemas_enable = false;
 
-    public MongoDBConnectConfig(String name, String connection_uri, String topic,String database, String collection){
-        this.name = name;
+    public MongoDBConnectConfig(String connection_uri, String topic,String database, String collection){
         this.topics = new LinkedList<String>();
         this.topics.add(topic);
-        // this.topics = topic; //REMOVE later
         this.database = database;
         this.connection_uri = connection_uri;
         this.collection = collection;
     }
 
-    public String getName(){
-        return name;
-    }
-
-    public List<String> getTopics(){
-        return topics;
+    public String getTopics(){
+        return String.join(",", topics);
     }
 
     /**
@@ -108,10 +101,4 @@ public class MongoDBConnectConfig
     public boolean isValue_converter_schemas_enable() {
         return value_converter_schemas_enable;
     }
-
-    // public String getJson() throws JsonProcessingException {
-    //     ObjectMapper oj = new ObjectMapper();
-
-    //     return oj.writeValueAsString(this);
-    // }
 }
