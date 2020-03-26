@@ -45,15 +45,10 @@ public class ConnectClient
     public ConnectClient(ConnectConfig config)
     {
         m_config = config;
-        m_deployed = false;
     }
 
     public void deploy() throws Exception
     {
-        if(m_deployed)
-        {
-            throw new Exception("already deployed");
-        }
         for(SinkConfig sink_config : m_config.sink_configs)
         {
             post(sink_config.getJson(m_config.zeebe_client_broker_contactPoint), m_config.kafka_host);
@@ -62,14 +57,9 @@ public class ConnectClient
         {
             post(source_config.getJson(m_config.zeebe_client_broker_contactPoint), m_config.kafka_host);
         }
-        m_deployed = true;
     }
     public void delete() throws Exception
     {
-        if(!m_deployed)
-        {
-            throw new Exception("not deployed");
-        }
         for(SinkConfig sink_config : m_config.sink_configs)
         {
             delete(sink_config.name, m_config.kafka_host);
@@ -78,11 +68,9 @@ public class ConnectClient
         {
             delete(source_config.name, m_config.kafka_host);
         }
-        m_deployed = false;
     }
 
     private ConnectConfig m_config;
-    private boolean m_deployed;
 
     private static void post(String json, String connector_url)
     {
