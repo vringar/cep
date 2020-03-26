@@ -18,6 +18,8 @@ buildNumber.properties
 # End of https://www.gitignore.io/api/maven
 #
 
-**/.classpath
-**/.project
-**/.settings/
+.classpath
+.project
+.settings
+*.iml
+.idea
