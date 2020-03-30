@@ -1,4 +1,4 @@
-package berlin.hu.cep.kafkaconnect;
+package berlin.hu.cep.connectclient;
 
 import static org.junit.Assert.assertTrue;
 
