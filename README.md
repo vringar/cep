@@ -31,6 +31,11 @@ Des weiteren enthält das System eine Machbarkeitsstudie in Form einer realisier
      - [ ] Beispiel zum laufen kriegen
      - [ ] Beispiel dokumentieren
      - [ ] Python (für Beispiel)
+     
+     #### Tutorial
+     Zum kompilieren des Deployers muss im Monorepo Ordner `mvn clean package` ausgeführt werden. Zum Starten
+     muss `java -jar deployer/target/deployer-0.0-SNAPSHOT-jar-with-dependencies.jar
+     -deploy deployer/deployer_config.json` ausgeführt werden.
 
 Für 2.):
 
