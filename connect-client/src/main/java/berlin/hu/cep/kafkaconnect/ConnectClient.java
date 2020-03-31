@@ -1,4 +1,4 @@
-package berlin.hu.cep.connectclient;
+package berlin.hu.cep.kafkaconnect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import retrofit2.Call;
