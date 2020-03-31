@@ -69,7 +69,7 @@ public class ConnectClient
             ConnectorPostObject config = new ConnectorPostObject(sink_config.getName(), sink_config);
             String config_json = oj.writeValueAsString(config);
             post(config_json, get_connector_url());
-            if(sink_config.isMongoDB_logging()){
+            if(sink_config.isMongoDB_logging()){ //TODO: Check if mongoDB_url and _database is set
                 MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
                         mongoDB_url,
                         sink_config.getTopics(),
@@ -89,7 +89,7 @@ public class ConnectClient
             String config_json = oj.writeValueAsString(config);
             post(config_json, get_connector_url());
 
-            if(source_config.isMongoDB_logging()){
+            if(source_config.isMongoDB_logging()){ //TODO: Check if mongoDB_url and _database is set
                 MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
                         mongoDB_url,
                         source_config.getJob_header_topics(),
