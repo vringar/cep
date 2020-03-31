@@ -1,7 +1,10 @@
 package berlin.hu.cep.kafkaconnect;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -13,20 +16,51 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConnectClient
 {
-    public String connector_host;
-    public String connector_port;
-    public String mongoDB_url;
-    public String mongoDB_database;
-    public String zeebe_client_broker_contactPoint;
-    public List<ZeebeSourceConfig> source_configs;
-    public List<ZeebeSinkConfig> sink_configs;
+    private String connector_host;
+    private int connector_port;
+    private String mongoDB_url;
+    private String mongoDB_database;
+    private String zeebe_client_broker_contactPoint;
+    private List<ZeebeSourceConfig> source_configs;
+    private List<ZeebeSinkConfig> sink_configs;
+
+    @JsonCreator
+    public ConnectClient(
+            @JsonProperty("sink_configs") List<ZeebeSinkConfig> sink_configs,
+            @JsonProperty("source_configs") List<ZeebeSourceConfig> source_configs,
+            @JsonProperty("zeebe_client_broker_contactPoint") String zeebe_client_broker_contactPoint,
+            @JsonProperty("connector_host") String connector_host,
+            @JsonProperty("connector_port") int connector_port) {
+        this.sink_configs = sink_configs;
+        this.source_configs = source_configs;
+        this.zeebe_client_broker_contactPoint = zeebe_client_broker_contactPoint;
+        this.connector_host = connector_host;
+        this.connector_port = connector_port;
+    }
+
+    @JsonCreator
+    public ConnectClient(
+            @JsonProperty("connector_host") String connector_host,
+            @JsonProperty("connector_port") int connector_port,
+            @JsonProperty("mongoDB_url") String mongoDB_url,
+            @JsonProperty("mongoDB_database") String mongoDB_database,
+            @JsonProperty("zeebe_client_broker_contactPoint") String zeebe_client_broker_contactPoint,
+            @JsonProperty("source_configs") List<ZeebeSourceConfig> source_configs,
+            @JsonProperty("sink_configs") List<ZeebeSinkConfig> sink_configs) {
+        this.connector_host = connector_host;
+        this.connector_port = connector_port;
+        this.mongoDB_url = mongoDB_url;
+        this.mongoDB_database = mongoDB_database;
+        this.zeebe_client_broker_contactPoint = zeebe_client_broker_contactPoint;
+        this.source_configs = source_configs;
+        this.sink_configs = sink_configs;
+    }
 
     private String get_connector_url() {
         return "http://" + connector_host + ":" + connector_port;
     }
 
-    public void deploy() throws Exception
-    {
+    public void deploy() throws Exception {
         ObjectMapper oj = new ObjectMapper();
 
         //Deploy sink_configs
