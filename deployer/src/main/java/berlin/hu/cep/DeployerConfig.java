@@ -1,6 +1,6 @@
 package berlin.hu.cep;
 
-import berlin.hu.cep.kafkaconnect.*;
+import berlin.hu.cep.connectclient.*;
 import berlin.hu.cep.siddhi.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
