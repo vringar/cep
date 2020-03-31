@@ -1,7 +1,8 @@
 {
   "kafkaconnect_config":
   {
-    "kafka_host": "http://localhost:8083/",
+    "connector_host": "localhost",
+    "connector_port": "8083",
     "zeebe_client_broker_contactPoint": "zeebe:26500",
     "source_configs":
     [

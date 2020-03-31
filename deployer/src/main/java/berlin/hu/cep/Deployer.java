@@ -20,7 +20,7 @@ public class Deployer
 
         if(args.length >= 2)
         {
-            DeployerConfig deployer_config = null;
+            DeployerConfig deployer = null;
             ConnectClient cc = null;
             SiddhiRestClient sc = null;
 
@@ -28,10 +28,10 @@ public class Deployer
             try {
                 String config_json = Files.readString(Paths.get(args[1]), StandardCharsets.US_ASCII);
                 ObjectMapper object_mapper = new ObjectMapper();
-                deployer_config = object_mapper.readValue(config_json, DeployerConfig.class);
+                deployer = object_mapper.readValue(config_json, DeployerConfig.class);
 
-                cc = new ConnectClient(deployer_config.kafkaconnect_config);
-                sc = new SiddhiRestClient(deployer_config.siddhi_config);
+                cc = deployer.getKafkaconnect_config();
+                sc = new SiddhiRestClient(deployer.getSiddhi_config());
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -51,7 +51,7 @@ public class Deployer
             {
                 try {
                     cc.delete();
-                    for(String name : deployer_config.siddhi_config.siddhiFiles)
+                    for(String name : deployer.getSiddhi_config().siddhiFiles)
                     {
                         sc.deleteApplication(name);
                     }
