@@ -1,9 +1,10 @@
 package berlin.hu.cep;
 
-import berlin.hu.cep.connectclient.*;
+import berlin.hu.cep.kafkaconnect.*;
 import berlin.hu.cep.siddhi.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
