@@ -29,31 +29,14 @@ public class ZeebeSinkConfig extends ConnectorConfig
     @JsonCreator
     public ZeebeSinkConfig(
             @JsonProperty("name") String name,
-            @JsonProperty("mongoDB_logging") boolean mongoDB_logging,
+            @JsonProperty("mongoDB_logging") Boolean mongoDB_logging,
             @JsonProperty("message_path_messageName") String message_path_messageName,
             @JsonProperty("message_path_correlationKey") String message_path_correlationKey,
             @JsonProperty("message_path_variables") String message_path_variables,
             @JsonProperty("message_path_timeToLive") String message_path_timeToLive,
             @JsonProperty("topics") String topics) {
         this.name = name;
-        this.mongoDB_logging = mongoDB_logging;
-        this.message_path_messageName = message_path_messageName;
-        this.message_path_correlationKey = message_path_correlationKey;
-        this.message_path_variables = message_path_variables;
-        this.message_path_timeToLive = message_path_timeToLive;
-        this.topics = topics;
-    }
-
-    @JsonCreator
-    public ZeebeSinkConfig(
-            @JsonProperty("name") String name,
-            @JsonProperty("message_path_messageName") String message_path_messageName,
-            @JsonProperty("message_path_correlationKey") String message_path_correlationKey,
-            @JsonProperty("message_path_variables") String message_path_variables,
-            @JsonProperty("message_path_timeToLive") String message_path_timeToLive,
-            @JsonProperty("topics") String topics) {
-        this.name = name;
-        this.mongoDB_logging = false;
+        this.mongoDB_logging = mongoDB_logging==null?false:mongoDB_logging;
         this.message_path_messageName = message_path_messageName;
         this.message_path_correlationKey = message_path_correlationKey;
         this.message_path_variables = message_path_variables;
