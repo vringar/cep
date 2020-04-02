@@ -172,40 +172,4 @@ public class ConnectClient
         }
     }
 
-    public static void main( String[] args ) throws Exception
-    {
-        final String json_configuration =
-                "{\n" +
-                        "\"connector_host\": \"localhost\", \n" +
-                        "\"connector_port\": \"8083\", \n" +
-                        "\"mongoDB_url\" : \"mongodb://mongo:27017\", \n" +
-                        "\"mongoDB_database\" : \"Ping_Pong\", \n" +
-                        "    \"zeebe_client_broker_contactPoint\": \"zeebe:26500\",\n" +
-                        "    \"source_configs\":\n" +
-                        "    [\n" +
-                        "        {\n" +
-                        "            \"name\": \"Zeebe_source\",\n" +
-                        "            \"mongoDB_logging\": \"true\"\n" +
-                        "        }\n" +
-                        "    ],  \n" +
-                        "    \"sink_configs\":\n" +
-                        "    [\n" +
-                        "        {\n" +
-                        "            \"name\": \"Zeebe_sink\",\n" +
-                        "            \"mongoDB_logging\": \"true\",\n" +
-                        "            \"topics\": \"some_topic_for_me\",\n" +
-                        "            \"message_path_messageName\": \"$.variablesAsMap.name\",\n" +
-                        "            \"message_path_correlationKey\": \"$.variablesAsMap.key\",\n" +
-                        "            \"message_path_variables\": \"$.variablesAsMap.payload\",\n" +
-                        "            \"message_path_timeToLive\": \"$.variablesAsMap.ttl\"\n" +
-                        "        }\n" +
-                        "    ]\n" +
-                        "}";
-
-        ObjectMapper object_mapper = new ObjectMapper();
-        ConnectClient cc = object_mapper.readValue(json_configuration, ConnectClient.class);
-        cc.deploy();
-        cc.delete();
-    }
-
 }
