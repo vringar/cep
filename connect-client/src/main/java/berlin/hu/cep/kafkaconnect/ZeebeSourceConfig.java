@@ -32,22 +32,11 @@ public class ZeebeSourceConfig extends ConnectorConfig
             @JsonProperty("name") String name,
             @JsonProperty("job_types") String job_types,
             @JsonProperty("job_header_topics") String job_header_topics,
-            @JsonProperty("mongoDB_logging") boolean mongoDB_logging) {
+            @JsonProperty("mongoDB_logging") Boolean mongoDB_logging) {
         this.name = name;
         this.job_types = job_types;
         this.job_header_topics = job_header_topics;
-        this.mongoDB_logging = mongoDB_logging;
-    }
-
-    @JsonCreator
-    public ZeebeSourceConfig(
-            @JsonProperty("name") String name,
-            @JsonProperty("job_types") String job_types,
-            @JsonProperty("job_header_topics") String job_header_topics) {
-        this.name = name;
-        this.job_types = job_types;
-        this.job_header_topics = job_header_topics;
-        this.mongoDB_logging = false;
+        this.mongoDB_logging = mongoDB_logging==null?false:mongoDB_logging;
     }
 
     @JsonIgnore
