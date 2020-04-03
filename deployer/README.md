@@ -19,12 +19,16 @@ where `config.json` looks like this:
 {
      "kafkaconnect_config":
      {
-       "kafka_host": "http://localhost:8083/",
+       "connector_host": "localhost",
+       "connector_port": "8083",
+       "mongoDB_url": "mongodb://mongo:27017",
+       "mongoDB_database": "Ping_Pong"
        "zeebe_client_broker_contactPoint": "zeebe:26500",
        "source_configs":
        [
          {
            "name": "ping",
+           "mongoDB_logging": "true",
            "job_types": "ping",
            "job_header_topics": "topic"
            //, ... all other settings can be configured also but
@@ -36,6 +40,7 @@ where `config.json` looks like this:
        [
          {
            "name": "pong",
+           "mongoDB_logging": "true",
            "topics": "toZeebe",
            "message_path_messageName": "$.name",
            "message_path_correlationKey": "$.key",
@@ -58,5 +63,4 @@ where `config.json` looks like this:
      }
    }
 ```
-
 To remove a deployed configuration replace `-deploy` with `-remove`
