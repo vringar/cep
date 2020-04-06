@@ -1,5 +1,5 @@
 {
-  "kafkaconnect_config":
+  "connector_config":
   {
     "connector_host": "localhost",
     "connector_port": "8083",

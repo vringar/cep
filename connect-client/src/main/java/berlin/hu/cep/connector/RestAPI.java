@@ -1,4 +1,4 @@
-package berlin.hu.cep.kafkaconnect;
+package berlin.hu.cep.connector;
 
 import retrofit2.Call;
 import retrofit2.http.*;

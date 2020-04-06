@@ -239,7 +239,7 @@ Für 2.):
   müssen jedoch vor Benutzung entfernt werden): (**TODO**: Feldernamen anpassen, Übereinstimmung mit aktueller Version)
   ```
   {
-    "kafkaconnect_config":
+    "connector_config":
     {
       "kafka_host": "http://localhost:8083/", //kafka-connect hostname und port
       "zeebe_client_broker_contactPoint": "zeebe:26500", // selbsterklärend, hostname:port
@@ -280,7 +280,7 @@ Für 2.):
   Die beiden Memberfunktionen `deploy()`, `delete()` setzen diese Konfiguration ein, b.z.w entfernen sie wieder
   aus dem laufenden Kafka-Connect System.  
   Die Bedeutungen der verschiedenen Felder in der `ConnectConfig` stimmen mit den Bedeutungen überein,
-  die unter **Schnittstellen, Deployer** bezüglich des `"kafkaconnect_config"` JSON-Felds genannt wurden.  
+  die unter **Schnittstellen, Deployer** bezüglich des `"connector_config"` JSON-Felds genannt wurden.  
   Der Sourcecode des [Deployers](./deployer/src/main/java/berlin/hu/cep/Deployer.java) soll hier als weitere
   Dokumentation dienen. 
   ##### Siddhi-Client

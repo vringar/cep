@@ -5,10 +5,10 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>berlin.hu.cep</groupId>
-  <artifactId>kafkaconnect</artifactId>
+  <artifactId>connector</artifactId>
   <version>0.0-SNAPSHOT</version>
 
-  <name>kafkaconnect</name>
+  <name>connector</name>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

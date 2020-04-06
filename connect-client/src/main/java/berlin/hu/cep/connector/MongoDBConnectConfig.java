@@ -1,4 +1,4 @@
-package berlin.hu.cep.kafkaconnect;
+package berlin.hu.cep.connector;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
