@@ -241,7 +241,8 @@ Für 2.):
   {
     "connector_config":
     {
-      "kafka_host": "http://localhost:8083/", //kafka-connect hostname und port
+      "connector_host": "localhost", //kafka-connect hostname
+      "connector_port": "8083", //kafka-connect port
       "zeebe_client_broker_contactPoint": "zeebe:26500", // selbsterklärend, hostname:port
       "source_configs": // Array, das alle Kafka-Connect Source Configs enthält
       [
