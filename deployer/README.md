@@ -17,7 +17,7 @@ java -jar ./target/deployer-1.0-SNAPSHOT-jat-with-dependencies.jar -deploy confi
 where `config.json` looks like this:
 ```
 {
-     "kafkaconnect_config":
+     "connector_config":
      {
        "connector_host": "localhost",
        "connector_port": "8083",

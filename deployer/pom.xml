@@ -27,7 +27,7 @@
 
     <dependency>
       <groupId>berlin.hu.cep</groupId>
-      <artifactId>kafkaconnect</artifactId>
+      <artifactId>connector</artifactId>
       <version>0.0-SNAPSHOT</version>
     </dependency>
 

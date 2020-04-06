@@ -1,5 +1,5 @@
 {
-  "kafkaconnect_config":
+  "connector_config":
   {
     "kafka_host": "http://localhost:8083/",
     "zeebe_client_broker_contactPoint": "zeebe:26500",
