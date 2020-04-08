@@ -97,6 +97,11 @@ public class ConnectClient
         return "http://" + connector_host + ":" + connector_port;
     }
 
+    /**
+     * Deploys the <strong>Kafka Connect</strong> according to @{@link sink_configs the sink configurations} and @{@link source_configs the source configurations}
+     *
+     * @throws Exception if somethings goes wrong //TODO: Exception specification
+     * */
     public void deploy() throws Exception {
         ObjectMapper oj = new ObjectMapper();
 
@@ -139,7 +144,11 @@ public class ConnectClient
         }
     }
 
-
+    /**
+     * Deletes previously deployed <strong>Kafka Connect</strong> configurations.
+     *
+     * @throws Exception if something goes wrong //TODO: Exception specification
+     * */
     public void delete() throws Exception
     {
         for(ZeebeSinkConfig sink_config : sink_configs){
