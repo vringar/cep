@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * A class which holds several <strong>Kafka Connect</strong> configurations, which connect to <strong>Zeebe</strong>.
- * An instance of the class is designed to be initialized through a json-file with the {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) readValue() methode form the Jackson package}.
+ * An instance of the class is designed to be initialized through a json-file with the {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) readValue() methode from the Jackson package}.
  * One ConnectClient holds the needed urls of the systems which should be configured.
  * One ConnectClient can configure as many Zeebesink and -source endpoints as needed.
  * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.
@@ -39,20 +39,42 @@ public class ConnectClient
     private List<ZeebeSourceConfig> source_configs;
     private List<ZeebeSinkConfig> sink_configs;
 
-    @JsonCreator
+    /**
+     * Constructor for the class {@link ConnectClient}, not suitable for creation with {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) Jacksons readValue() methode}.
+     * This constructor does not need mongoDB options. It is to be used when no logging via <strong>mongoDB</strong> should happen.
+     *
+     * @param connector_host the hostname on which <strong>Kafka Connect</strong> runs.
+     * @param connector_port the port on which <strong>Kafka Connect</strong> runs.
+     * @param zeebe_client_broker_contactPoint the contactpoint for the <strong>Zeebe</strong>broker.
+     * @param source_configs A list of {@link ZeebeSourceConfig configuration for Zeebe as source}.
+     * @param sink_configs A list of {@link ZeebeSinkConfig configuration for Zeebe as sink}.
+     * */
     public ConnectClient(
-            @JsonProperty("sink_configs") List<ZeebeSinkConfig> sink_configs,
-            @JsonProperty("source_configs") List<ZeebeSourceConfig> source_configs,
-            @JsonProperty("zeebe_client_broker_contactPoint") String zeebe_client_broker_contactPoint,
-            @JsonProperty("connector_host") String connector_host,
-            @JsonProperty("connector_port") int connector_port) {
+            List<ZeebeSinkConfig> sink_configs,
+            List<ZeebeSourceConfig> source_configs,
+            String zeebe_client_broker_contactPoint,
+            String connector_host,
+            int connector_port) {
         this.sink_configs = sink_configs;
         this.source_configs = source_configs;
         this.zeebe_client_broker_contactPoint = zeebe_client_broker_contactPoint;
         this.connector_host = connector_host;
         this.connector_port = connector_port;
     }
+    //TODO: Test if this still works, with jackson
 
+
+    /**
+     * Constructor for the class ConnectClient, suitable for creation with {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) jacksons readValue() methode}
+     *
+     * @param connector_host the hostname on which <strong>Kafka Connect</strong> runs.
+     * @param connector_port the port on which <strong>Kafka Connect</strong> runs.
+     * @param mongoDB_url the url on which <strong>MongoDB</strong> runs, null otherwise. For e.g. "mongodb://mongo:27017"
+     * @param mongoDB_database the name of the database in which mongoDB should log, null otherwise.
+     * @param zeebe_client_broker_contactPoint the contactpoint for the <strong>Zeebe</strong>broker.
+     * @param source_configs A list of {@link ZeebeSourceConfig configuration for Zeebe as source}.
+     * @param sink_configs A list of {@link ZeebeSinkConfig configuration for Zeebe as sink}.
+     * */
     @JsonCreator
     public ConnectClient(
             @JsonProperty("connector_host") String connector_host,
