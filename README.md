@@ -4,7 +4,10 @@ Hier können wir alle möglichen MetaKram sammeln bevor wir alles in einzelne Re
 
 ## Checkliste Dokumentation
 
-für eure Dokumentation würden wir euch bitte zwei potentielle Zielgruppe im Auge zu haben: 1.) Potentielle Endanwender 2.) Entwickler die eure Software nutzen wollen.
+für eure Dokumentation würden wir euch bitte zwei potentielle Zielgruppe im Auge zu haben:  
+1.  Potentielle Endanwender
+2. Entwickler die eure Software nutzen wollen.
+  
 Für 1.) solltet ihr folgende Dinge in eure Dokumentation integrieren:
 
 - [ ] Produktvision
@@ -12,19 +15,34 @@ Für 1.) solltet ihr folgende Dinge in eure Dokumentation integrieren:
      - [ ] Diese Funktionalität einfach nutzbar zu machen
      - [ ] Cloud Native
 
-Workflow-Engines sind Softwaresysteme zur Überwachung und Steuerung von Prozessen basierend auf einem Modell. Während man in der Vergangenheit häufig nur einfache Geschäftsprozesse über Workflows abgewickelt hat, werden nach und nach die Anforderungen in Punkten wie beispielsweise Geschwindigkeit und Parallelität immer höher durch neue Anwendungsgebiete. Aus diesen Anwendungsgebieten gehen momentan leistungsfähigere Workflow-Engines, wie Zeebe, hervor.
-Diese Workflow-Engines sind allerdings auf sehr atomare Formen von Events beschränkt und erfordern somit teils sehr umständliche Modellierungen, um komplexere Zusammenhänge zwischen Events darzustellen. Um diese Komplexität besser handhaben zu können, kann man Complex Event Processing (CEP) einsetzen. Dieses ermöglicht es Daten in sinnvolle Informationen umzuwandeln und atomare Events in komplexe Events zu fassen.
-Dieses Produkt setzt die Zusammenschaltung zwischen der Workflow-Engine Zeebe und der CEP-Engine Siddhi um. Hierbei ermöglicht es auf eine einfache Weise CEP-Funktionalitäten in Zeebe-Workflows einzusetzen. (**TODO**: Irgendwas zu Cloud Native, Talken wir auch über Kafka als Möglichkeit neue Features zu integrieren?)
+Workflow-Engines sind Softwaresysteme zur Überwachung und Steuerung von Prozessen basierend
+auf einem Modell. Während man in der Vergangenheit häufig nur einfache Geschäftsprozesse über
+Workflows abgewickelt hat, werden nach und nach die Anforderungen in Punkten wie
+beispielsweise Geschwindigkeit und Parallelität immer höher durch neue Anwendungsgebiete.
+Aus diesen Anwendungsgebieten gehen momentan leistungsfähigere Workflow-Engines, wie Zeebe,
+hervor.  
+Diese Workflow-Engines sind allerdings auf sehr atomare Formen von Events beschränkt und
+erfordern somit teils sehr umständliche Modellierungen, um komplexere Zusammenhänge zwischen
+Events darzustellen. Um diese Komplexität besser handhaben zu können, kann man Complex Event
+Processing (CEP) einsetzen. Dieses ermöglicht es Daten in sinnvolle Informationen umzuwandeln
+und atomare Events in komplexe Events zu fassen.  
+Dieses Produkt setzt die Zusammenschaltung zwischen der Workflow-Engine Zeebe und der
+CEP-Engine Siddhi um. Hierbei ermöglicht es auf eine einfache Weise CEP-Funktionalitäten in
+Zeebe-Workflows einzusetzen. (**TODO**: Irgendwas zu Cloud Native, Talken wir auch über
+Kafka als Möglichkeit neue Features zu integrieren?)
 
 - [ ] Beschreibung des Systemumfangs
      - [ ] Machbarkeitsstudie
      - [ ] Docker-compose file + deployer als Ready-To-Deploy System
      - [ ] Deployer + Deployer Libraries
 
-Das System beinhaltet eine docker-compose Datei, um die verschiedenen Module hochzufahren und zu verbinden, sowie ein Deployer-Programm, welches die Möglichkeit bereitstellt Siddhi-Files hochzufahren und mit Zeebe-Workflows über Kafka zu verbinden.
-Zudem stellt der Deployer Java-Libraries zu Verfügung, um Siddhi-Files in der Laufzeit dynamisch hochzufahren und herunterzufahren.
-Des weiteren enthält das System eine Machbarkeitsstudie in Form einer realisierten Anbindung eines einfachen Workflows mit einem Siddhi-File.
-
+Das System beinhaltet eine docker-compose Datei, um die verschiedenen Module hochzufahren
+und zu verbinden, sowie ein Deployer-Programm, welches die Möglichkeit bereitstellt
+Siddhi-Files hochzufahren und mit Zeebe-Workflows über Kafka zu verbinden.   
+Zudem stellt der Deployer Java-Libraries zu Verfügung, um Siddhi-Files in der Laufzeit
+dynamisch hochzufahren und herunterzufahren.  
+Des weiteren enthält das System eine Machbarkeitsstudie in Form einer realisierten Anbindung
+eines einfachen Workflows mit einem Siddhi-File.
 
  - [ ] Mini-Tutorial -> Beispielhafte Darstellung der Anwendungsfälle mir Screenshots
 (**TODO**: Mini-Tutorial eventuell erst nach Architektur-Doku?)
@@ -33,16 +51,15 @@ Des weiteren enthält das System eine Machbarkeitsstudie in Form einer realisier
      - [ ] Python (für Beispiel)
      
      #### Tutorial
-     Zum kompilieren des Deployers muss im Monorepo Ordner `mvn clean package` ausgeführt werden. Zum Starten
-     muss `java -jar deployer/target/deployer-0.0-SNAPSHOT-jar-with-dependencies.jar
+     Zum kompilieren des Deployers muss im Monorepo Ordner `mvn clean package` ausgeführt werden.
+     Zum Starten muss `java -jar deployer/target/deployer-0.0-SNAPSHOT-jar-with-dependencies.jar
      -deploy deployer/deployer_config.json` ausgeführt werden.
 Für 2.):
 
 - [ ] Systemanforderungen
    - [ ] Docker
-   
-   xkcd.com/1988
    - [ ] Java
+   - [ ] welche Versionen
 - [ ] Beschreibung des Setups
    - [ ] Startup skript ausbauen und dokumentieren
 - [ ] Architekturdokumentation
@@ -93,15 +110,16 @@ Für 2.):
     unter **Schnittstellen, Deployer** beschrieben.
 - [ ] Verwendete Technologien/Ansätze
    - [ ] Apache Docker
-   - [ ] Apache Java
+   - [x] Apache Java
    - [ ] Apache Maven
    - [ ] Apache JSon
    - [ ] Apache Retrofit
-   - [ ] Apache Zeebe
+   - [x] Apache Zeebe
    - [ ] Apache Siddhi
    - [ ] Apache Kafka
    - [ ] Apache Kafka Connect
    - [ ] (Apache Apache)
+   (**TODO**: alles noch um MongoDB ergänzen, falls wir das am Ende benutzen)
    
    #### Verwendete Technologien/Ansätze
    (**TODO**: das hier sind nur Prototypische Beschreibungen, damit wir irgendwas erstmal haben)
@@ -110,21 +128,28 @@ Für 2.):
    Docker vereinfacht die Bereitstellung von Anwendungen, weil sich Container, die alle nötigen Pakete enthalten,
    leicht als Dateien transportieren und installieren lassen. Container gewährleisten die Trennung und
    Verwaltung der auf einem Rechner genutzten Ressourcen. Das beinhaltet laut Aussage der Entwickler:
-   Code, Laufzeitmodul, Systemwerkzeuge, Systembibliotheken – alles was auf einem Rechner installiert werden kann.
+   Code, Laufzeitmodul, Systemwerkzeuge, Systembibliotheken – alles was auf einem Rechner installiert werden kann.  
+   Docker wird von uns benutzt, um Zeebe, Kafka, Kafka-Connect, Siddhi und jeweils deren
+   Abhängigkeiten zu starten.
    ##### Java
    Java ist eine objekorientierte Programmiersprache, die von einem Übersetzerprogramm in Bytecode übersetzt, der
-   dann von einer Java-Laufzeitumgebung unabhänig von der ausführenden Hardware ausgeführt werden kann.
+   dann von einer Java-Laufzeitumgebung unabhänig von der ausführenden Hardware ausgeführt werden kann.  
+   Unser Deployer, der Siddhi-Client und der Connect-Client sind in Java geschrieben.
    ##### Apache Maven
    (**TODO**: das hier ist einfach ein wikipedia copy paste ACHTUNG)  
    Maven ist ein Build-Management-Tool der Apache Software Foundation und basiert auf Java.
-   Mit ihm kann man insbesondere Java-Programme standardisiert erstellen und verwalten.
+   Mit ihm kann man insbesondere Java-Programme standardisiert erstellen und verwalten.  
+   Wir benutzen Maven für den Build-Prozess unseres Deployers und den Bibliotheken dazu.
    ##### JSON/JavaScript Object Notation
    (**TODO**: das hier ist einfach ein copy paste von [hier](https://www.json.org/json-de.html) ACHTUNG)  
    JSON (JavaScript Object Notation) ist ein schlankes Datenaustauschformat, das für Menschen einfach zu lesen und
    zu schreiben und für Maschinen einfach zu parsen (Analysieren von Datenstrukturen) und zu generieren ist.
-   Es basierd auf einer Untermenge der JavaScript Programmiersprache.
+   Es basierd auf einer Untermenge der JavaScript Programmiersprache.  
+   Die Konfiguration unseres Deployers wird über eine JSON Schnittstelle erledigt.
    ##### Retrofit
-   [Ein typensicherer HTTP-Client für Java.](https://square.github.io/retrofit/)
+   [Ein typensicherer HTTP-Client für Java.](https://square.github.io/retrofit/), unser
+   Siddhi-Client und unser Connect-Client benutzen Retrofit, um mit Siddhi, b.z.w Kafka-Connect
+   zu kommunizieren.
    ##### Zeebe
    Zeebe ist ein in Java geschriebenes freies Workflow-Management-System, mit dem Geschäftsprozesse in BPMN 2.0 definiert und ausgeführt werden können.
    ##### Siddhi
@@ -135,7 +160,8 @@ Für 2.):
    Apache Kafka ist ein Open-Source-Software-Projekt der Apache Software Foundation, das insbesondere der
    Verarbeitung von Datenströmen dient. Kafka ist dazu entwickelt, Datenströme zu speichern und zu verarbeiten,
    und stellt eine Schnittstelle zum Laden und Exportieren von Datenströmen zu Drittsystemen bereit.
-   Die Kernarchitektur bildet ein verteiltes Transaktions-Log.
+   Die Kernarchitektur bildet ein verteiltes Transaktions-Log.  
+   Kafka ist in unserer Architektur der zentrale Kommunikation-Kanal zwischen Zeebe und Siddhi.
    ##### Kafka Connect
    (**TODO**: das hier ist einfach ein wikipedia copy paste ACHTUNG)  
    Kafka Connect bietet eine Schnittstelle zum Laden/Exportieren von Daten aus/in Drittsysteme.
@@ -143,80 +169,9 @@ Für 2.):
    Kommunikation mit dem Drittsystem übernehmen.
    Dabei definiert die Connect-API die Programmierschnittstellen, die von einem Connector implementiert
    werden müssen. Es gibt bereits viele frei verfügbare und kommerzielle Konnektoren, die genutzt werden können.
-   Apache Kafka liefert selbst keine produktreifen Konnektoren.
-   ##### Apache Apache
-   Das Universum, so wurde früher schon einmal bemerkt ist
-   verwirrend groß, was um eines friedlichen und stillen Lebens
-   willen die meisten Leute gern ignorieren.  
-   Viele würden mit Freuden irgendwohin umziehen, wo es
-   nach ihren Vorstellungen zuginge und viel kleiner wäre, und das
-   ist es, was die meisten Wesen tatsächlich tun.  
-   Zum Beispiel liegt in einem Winkel des Ostarms der
-   Galaxis der große Waldplanet Oglarun, dessen durch und durch
-   »intelligente« Bevölkerung permanent auf einem einzigen
-   ziemlich kleinen und dicht bevölkerten Nußbaum lebt. Auf
-   diesem Baum werden sie geboren, da leben sie, verlieben sich,
-   schnitzen winzige spekulative Aufsätze über den Sinn des
-   Lebens, die Sinnlosigkeit des Todes und die Bedeutung der
-   Geburtenkontrolle in die Rinde, führen ein paar äußerst
-   bedeutungslose Kriege und sterben schließlich, an die Un-
-   terseite einiger der weniger leicht erreichbaren äußeren Zweige
-   geschnallt.  
-   Die einzigen Oglarunier, die jemals ihren Baum verlassen,
-   sind eigentlich diejenigen, die für ein abscheuliches Verbrechen
-   hinuntergestoßen werden, das darin besteht daß sie sich fragen,
-   ob überhaupt auf irgendwelchen von den anderen Bäumen Leben
-   existieren könne oder ob die anderen Bäume nicht vielmehr
-   nichts anderes als Illusionen seien, die vom Essen zu vieler
-   Ogianüsse herrührten.  
-   So exotisch ihr Verhalten auch erscheinen mag, es gibt
-   keine Bioform in der Galaxis, die sich nicht in der einen oder
-   anderen Weise derselben Sache schuldig gemacht hätte, was der
-   Grund dafür ist, daß der Totale Durchblicksstrudel so
-   grauenerregend ist wie er‘s nun mal ist.  
-   Denn wenn man in den Strudel gesteckt wird, erhält man
-   schlicht und einfach einen flüchtigen Einblick in die ganze
-   unvorstellbare Unendlichkeit der Schöpfung, und irgendwo darin
-   sieht man einen winzigkleinen Pfeil, der auf einen mikroskopisch
-   kleinen Punkt gerichtet ist, und darauf steht: »Da bist du.«
-   
-   Der Totale Durchblicksstruclel stellt sein Bild vom
-   gesamten Universum nach dem Prinzip der Analyse
-   extrapolierter Materie her.  
-   Um das zu erklären: Da auf jedes Materieteilchen im
-   Universum in irgendeiner Weise alle anderen Materieteilchen im
-   Universum einwirken, ist es theoretisch möglich, die Gesamtheit
-   der Schöpfung - jede Sonne, jeden Planeten, ihre Umlaufbahnen,
-   ihre Zusammensetzung und ihre Wirtschafts- und Sozial-
-   geschichte aus, sagen wir mal zum Beispiel, einem kleinen Stück
-   Punschtorte zu extrapolieren.  
-   Der Mann, der den Totalen Durchblicksstrudel erfand, tat
-   das im Grunde nur, um seine Frau zu ärgern. 
-   Trin Tragula - so war sein Name - war ein Träumer, ein
-   Denker, ein grüblerischer Philosoph, oder wie seine Frau es
-   ausgedrückt haben würde, ein Idiot.  
-   Und sie nörgelte unausgesetzt mit ihm herum, wie
-   wahnsinnig viel Zeit er damit zubrächte, in den Weltraum zu
-   starren oder sich über den Mechanismus der Sicherheitsnadel den
-   Kopf zu zerbrechen oder Spektralanalysen von Punschtorten
-   herzustellen.  
-   »Hab doch ein bißchen Sinn für Verhältnismäßigkeiten!«
-   sagte sie immer wieder, manchmal nicht weniger als
-   achtunddreißigmal an einem einzigen Tag. 
-   Und so baute er den Totalen Durchblicksstrudel - um es ihr
-   einfach zu zeigen.  
-   Und in das eine Ende stopfte er die gesamte Realität, wie er
-   sie aus einem Stück Punschtorte extrapoliert hatte, und in das
-   andere Ende stopfte er seine Frau: so daß sie, als er den Strudel
-   anknipste, in einem einzigen kurzen Augenblick die ganze
-   Unendlichkeit der Schöpfung sah und sich selbst im Verhältnis
-   dazu.  
-   Zu Trin Tragulas Entsetzen vernichtete der Schreck ihr
-   Gehirn bis auf den letzten Rest; aber zu seiner Befriedigung
-   stellte er fest, daß er eines überzeugend nachgewiesen hatte:
-   wenn in einem Universum von dieser Größe das Leben überhaupt
-   Bestand haben wolle, dann könne es sich vor allen Dingen nicht
-   leisten, Sinn für Verhältnismäßigkeiten zu haben.
+   Apache Kafka liefert selbst keine produktreifen Konnektoren.  
+   Kafka Connect macht es uns wesentlich einfacher eine Verbindung zwischen Kafka und Zeebe
+   herzustellen.
 
    
 - [ ] Schnittstellenbeschreibung
@@ -291,14 +246,62 @@ Für 2.):
    
 - [ ] Offene Punkte/Einschränkungen/Systemgrenzen
    - [ ] Config zur Zeit nur statisch und nicht zur Laufzeit anpassbar
-   - [ ] Zeebe Exporter nach Siddhi schicken
-       - [ ] Protobuf in Siddhi 
+   - [x] Zeebe Exporter nach Siddhi schicken
+       - [x] Protobuf in Siddhi 
    - [ ] Immer nur mit Kafka im Compose File getestet
-   - [ ] Keine Tests im Deployer
-   - [ ] Zeebe Integration in den Deployer
+   - [x] Keine Tests im Deployer
+   - [x] Zeebe Integration in den Deployer
+   
+   #### Offene Punkte/Einschränkungen/Systemgrenzen
+   
+   ##### Statische Konfiguration
+   (**TODO**: Ergibt das Sinn? Könnte man nicht einfach während der Runtime zumindestens
+   mit dem Deployer eine neue Konfiguration pushen?/Worauf bezieht sich das "statisch"?) 
+   Unser System baut darauf auf, die Konfiguration aller beteiligten Anwendungen ausschließlich
+   zu Beginn der Benutztung durchzuführen. Eine neue Konfiguration kann nicht z.B. durch Events
+   während des Betriebs eingeführt werden.
+   
+   ##### Zeebe Kafka Record Exporter
+   Mit unserem System müssen alle Zeebe-Events explizit im BPMN-Worklow angegeben werden.
+   Zeebe stellt in Exportern sogenannte Records zur Verfügung, die Informationen über den
+   Zustand von Workflow-Instanzen geben, ob z.B. ein bestimmter Job beendet wurde.  
+   Diese Record könnten zusätzlich zu den expliziten Events über Kafka an Siddhi gesendet werden.
+   Zeebe stellt sogar schon [eine einfache Implementation](https://github.com/zeebe-io/zeebe-kafka-exporter)
+   für einen Zeebe-Exporter, der Zeebe-Records in einem Protobuf Schema auf ein Kafka-Topic
+   schreibt.  
+   Siddhi, b.z.w. die Siddhi-Files, muss dann zusätzlich noch konfiguriert um Protobufs
+   erkennen zu können.
+   
+   ##### Deployer Verbesserungen
+   Im Deployer und in den Client Bibliotheken wird nur bedingt auf Fehler getestet und nur
+   primitive Fehlernachrichten ausgegeben.  
+   So könnten z.B. der Connect-Client und der Siddhi-Client noch bessere Fehleranalysen
+   betreiben bezüglich der Verbindung zu dem Siddhi-Host/Kafka-Connect-Host.  
+   Eine weitere Verbesserung dieser Clienten wäre, mithilfe der BPMN-Workflow Dateien, die
+   eingesetzt werden sollen, einen Sanity-Check durchzuführen, um zu überprüfen, ob es
+   offensichtliche Ungereimtheiten in den Siddhi-Files oder in der Kafka-Connect Konfiguration
+   gibt.  
+   Eventuell kann es sinnvoll sein, den Deployer mit einem Zeebe-Clienten zu erweitern, der
+   sich um die BPMN-Workfows kümmert, was vor allem nützlich sein kann, wenn die oben
+   angesprochenen Überprüfung der Konfiguration anhand der BPMN-Workflows eingesetzt wird.
+   
+   
 - [ ] Link zum Source Code
     - [ ] Umstrukturieren des Deployers zu einem Repo
     - [ ] Link zum diesem neuen Repo in die Doku
 - [ ] Lizenzierung
-    - [ ] haben wir irgendwas zu beachten mit den Sachen die wir benutzen?
-    - [ ] MIT?
+    - [ ] haben wir irgendwas zu beachten mit den Sachen die wir benutzen?  
+    Eigentlich nicht, oder, ich meine wir haben ja nur config-files für docker und maven
+    und halt unseren eigene Javaspaghettisuppe.
+    - [ ] MIT?  
+    **Begin license text.**
+    
+    Copyright 2020 Spiderman(**TODO**)
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    
+    **End license text.**
