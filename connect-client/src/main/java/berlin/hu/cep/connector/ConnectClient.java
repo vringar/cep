@@ -13,6 +13,21 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 import java.util.List;
 
+/**
+ * A class which holds several <strong>Kafka Connect</strong> configurations, which connect to <strong>Zeebe</strong>.
+ * An instance of the class is designed to be initialized through a json-file with the {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) readValue() methode form the Jackson package}.
+ * One ConnectClient holds the needed urls of the systems which should be configured.
+ * One ConnectClient can configure as many Zeebesink and -source endpoints as needed.
+ * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.
+ * The configuration can deployed with the {@link #deploy() deploy methode} and deleted with the {@link #delete() delete methode}.
+ *
+ * @author Lukas Gehring
+ * @author Jost Hermann Triller
+ *
+ * @see ZeebeSourceConfig
+ * @see ZeebeSinkConfig
+ * @see com.fasterxml.jackson.databind.ObjectMapper
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConnectClient
 {
