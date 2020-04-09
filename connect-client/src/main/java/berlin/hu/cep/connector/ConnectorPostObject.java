@@ -25,14 +25,18 @@ public class ConnectorPostObject
     }
 
     /**
-     * @return the name
+     * The name of the connector in <strong>Kafka Connect</strong>.
+     *
+     * @return the name of the connector
      */
     public String getName() {
         return name;
     }
 
     /**
-     * @return the config
+     * The configuration parameters for this <strong>Kafka Connect</strong> connector.
+     *
+     * @return the configuration parameters
      */
     public ConnectorConfig getConfig() {
         return config;
