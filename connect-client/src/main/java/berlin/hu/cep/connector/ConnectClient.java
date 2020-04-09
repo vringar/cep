@@ -19,7 +19,7 @@ import java.util.List;
  * One ConnectClient holds the needed urls of the systems which should be configured.
  * One ConnectClient can configure as many Zeebesink and -source endpoints as needed.
  * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.
- * The configuration can deployed with the {@link #deploy() deploy methode} and deleted with the {@link #delete() delete methode}.
+ * The configuration can deployed with the {@link #deploy() deploy() methode} and deleted with the {@link #delete() delete() methode}.
  *
  * @author Lukas Gehring
  * @author Jost Hermann Triller

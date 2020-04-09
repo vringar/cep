@@ -8,6 +8,8 @@
  * </p><p>
  * It can also configure a <em>MongoDB Connector</em> so that events get logged in a MongoDB instace</p>
  *
+ * @author Lukas Gehring
+ * @author Jost Hermann Triller
  * @since 0.0
  * */
 package berlin.hu.cep.connector;
