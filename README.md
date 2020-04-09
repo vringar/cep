@@ -285,6 +285,11 @@ Für 2.):
    sich um die BPMN-Workfows kümmert, was vor allem nützlich sein kann, wenn die oben
    angesprochenen Überprüfung der Konfiguration anhand der BPMN-Workflows eingesetzt wird.
    
+   ##### Ausführliches Testen
+   Wir haben unser System nur in der bereitgestellten Zusammenstellung getestet.
+   So bleibt zum Beispiel offen, ob es in der Praxis auch mit Kafka funktioniert, wenn Kafka nicht über
+   docker-compose gestartet wurde.
+   
    
 - [ ] Link zum Source Code
     - [ ] Umstrukturieren des Deployers zu einem Repo
