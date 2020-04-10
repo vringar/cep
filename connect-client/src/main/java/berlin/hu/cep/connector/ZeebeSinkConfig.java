@@ -2,7 +2,6 @@ package berlin.hu.cep.connector;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -31,7 +30,7 @@ public class ZeebeSinkConfig extends ZeebeConfig
     /**
      * Constructor for ZeebeSinkConfig.
      * Note that since this class has some assumptions not all configuration properties provided by the official <em>Zeebe Sink Connector</em> can be set here.
-     * @param name
+     * @param name name of the connector
      * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong>database.
      * @param message_path_messageName JSONPath query to use to extract the message name from the record.
      * @param message_path_correlationKey JSONPath query to use to extract the correlation key from the record.
@@ -76,7 +75,7 @@ public class ZeebeSinkConfig extends ZeebeConfig
 
     /**
      * JSONPath query to use to extract the correlation key from the record
-     * @JSONPath query for the correlation key
+     * @return JSONPath query for the correlation key
      */
     @JsonGetter("message.path.correlationKey")
     public String getMessage_path_correlationKey() {
@@ -85,7 +84,7 @@ public class ZeebeSinkConfig extends ZeebeConfig
 
     /**
      * JSONPath query to use to extract the variables from the record
-     * @JSONPath query for variables from the record
+     * @return JSONPath query for variables from the record
      */
     @JsonGetter("message.path.variables")
     public String getMessage_path_variables() {

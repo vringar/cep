@@ -2,7 +2,6 @@ package berlin.hu.cep.connector;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -32,6 +31,7 @@ public class ZeebeSourceConfig extends ZeebeConfig
     /**
      * Constructor for ZeebeSourceConfig.
      * Note that since this class has some assumptions not all configuration properties provided by the official <em>Zeebe Source Connector</em> can be set here.
+     * @param name name of the connector.
      * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong>database.
      * @param job_types a comma-separated list of job types that should be consumed by the connector
      * @param job_header_topics the custom service task header which specifies to which <strong>Kafka</strong>topics the message should be published to.
