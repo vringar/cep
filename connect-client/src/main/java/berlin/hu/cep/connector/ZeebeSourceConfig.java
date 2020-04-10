@@ -9,9 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * A class to configure a <em>Zeebe Source Connector</em> with sane defaults.
  * <p>The connector is designed to send simple events to a <strong>Siddhi</strong>instace for further processing.</p>
  * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Source Connetor</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent from this source connector.</p>
- *<p> An object of this class can be converted to a properties file for the Zeebe Source Connector in json <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
+ *<p> An object of this class can be converted to a properties file for the <em>Zeebe Source Connector</em> in json with the<a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
  *
- * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Home of the Kafka Connect connector for Zeebe</a>
+ * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Kafka Connect connector for Zeebe</a>
  * @author Lukas Gehring
  * @author Leon Haussknecht
  * @author Maurice Lindner

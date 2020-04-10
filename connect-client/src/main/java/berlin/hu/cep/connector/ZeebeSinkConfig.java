@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A class to configure a <em>Zeebe Sink Connector</em> with sane defaults.
- * <p>The connector is designed to get complex events from a running <strong>Siddhi</strong>instace</p>
+ * <p>The connector is designed to get complex events from a running <strong>Siddhi</strong>instace</p>.
  * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Sink Connetor</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent to this sink connector.</p>
- *<p> An object of this class can be converted to a properties file for the Zeebe Sink Connector in json <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
+ *<p> An object of this class can be converted to a properties file for the <em>Zeebe Sink Connector</em> in json with the<a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
  *
- * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Home of the Kafka Connect connector for Zeebe</a>
+ * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Kafka Connect connector for Zeebe</a>
  * @author Lukas Gehring
  * @author Leon Haussknecht
  * @author Maurice Lindner

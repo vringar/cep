@@ -6,12 +6,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.LinkedList;
 
-
 /**
  * A class to configure a <em>MongoDBSinkConnector</em> for <strong>Kafka Connect</strong> with sane defaults.
  * <p>The configuration is designed so that all communication between a <strong>Siddhi</strong>-
  * and a <strong>Zeebe</strong>-instance is logged in a <strong>MongoDB</strong>database.</p>
- * An object of this class can be converted to a properties file for the MongDB Kafka Sink Connector in json <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.
+ * An object of this class can be converted to a properties file for the <em>MongDB Kafka Sink Connector</em> in json with the<a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.
  *
  * @see <a href="https://docs.mongodb.com/kafka-connector/current/kafka-sink/">MongoDB Kafka Sink Connector Documentation</a>
  * */

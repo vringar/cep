@@ -14,12 +14,14 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 import java.util.List;
 
 /**
- * A class which holds several <strong>Kafka Connect</strong> configurations, which connect to <strong>Zeebe</strong>.
+ * A class which holds several <strong>Kafka Connect</strong> configurations, for connection to <strong>Zeebe</strong>.
  * <p>An instance of the class is designed to be initialized through a json-file with the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> readValue() methode from the Jackson package</a>.</p>
- * One ConnectClient holds the needed urls of the systems which should be configured.
- * One ConnectClient can configure as many Zeebesink and -source endpoints as needed.
- * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.
- * The configuration can deployed with the {@link #deploy() deploy() methode} and deleted with the {@link #delete() delete() methode}.
+ * <p>
+ * One ConnectClient holds the needed urls of the systems which should be configured
+ * and can configure as many Zeebesink and -source endpoints as needed.
+ * <p></p>
+ * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.</p>
+ * The configuration can be deployed with the {@link #deploy() deploy() methode} and deleted with the {@link #delete() delete() methode}.
  *
  * @author Lukas Gehring
  * @author Jost Hermann Triller
@@ -38,31 +40,6 @@ public class ConnectClient
     private String zeebe_client_broker_contactPoint;
     private List<ZeebeSourceConfig> source_configs;
     private List<ZeebeSinkConfig> sink_configs;
-
-    /**
-     * Constructor for the class {@link ConnectClient}, not suitable for creation with <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> Jacksons readValue() methode</a>.
-     * This constructor does not need mongoDB options. It is to be used when no logging via <strong>mongoDB</strong> should happen.
-     *
-     * @param connector_host the hostname on which <strong>Kafka Connect</strong> runs.
-     * @param connector_port the port on which <strong>Kafka Connect</strong> runs.
-     * @param zeebe_client_broker_contactPoint the contactpoint for the <strong>Zeebe</strong>broker.
-     * @param source_configs A list of {@link ZeebeSourceConfig configuration for Zeebe as source}.
-     * @param sink_configs A list of {@link ZeebeSinkConfig configuration for Zeebe as sink}.
-     * */
-    public ConnectClient(
-            List<ZeebeSinkConfig> sink_configs,
-            List<ZeebeSourceConfig> source_configs,
-            String zeebe_client_broker_contactPoint,
-            String connector_host,
-            int connector_port) {
-        this.sink_configs = sink_configs;
-        this.source_configs = source_configs;
-        this.zeebe_client_broker_contactPoint = zeebe_client_broker_contactPoint;
-        this.connector_host = connector_host;
-        this.connector_port = connector_port;
-    }
-    //TODO: Test if this still works, with jackson
-
 
     /**
      * Constructor for the class {@link ConnectClient}, suitable for creation with <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> Jacksons readValue() methode</a>.

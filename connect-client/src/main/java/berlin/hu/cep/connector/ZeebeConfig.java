@@ -66,9 +66,8 @@ public abstract class ZeebeConfig extends ConnectorConfig{
     }
 
     /**
-     * mongoDB_logging tells us if the events for this sink connector should be loggend to <strong>MongoDB</strong>.
-     * This is not a property of the <em>Zeebe Sink Connector</em>.
-     * It will not be written to the json config file.
+     * mongoDB_logging tells us if the events for this connector should be loggend to <strong>MongoDB</strong>.
+     * This property is not included into generated json, because it is not part of the offical <em>ZeebeConnector</em> specification.
      * @return if the events for this connector get logged
      */
     @JsonIgnore
@@ -78,7 +77,7 @@ public abstract class ZeebeConfig extends ConnectorConfig{
 
     /**
      * Returns the name of the configuration.
-     * The name is not included into generated json, because it is not part of the offical ZeebeConnector specification.
+     * The property is not included into generated json, because it is not part of the offical <em>ZeebeConnector</em> specification.
      * @return the name of the configuration
      */
     @JsonIgnore
