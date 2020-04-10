@@ -20,19 +20,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author Stefan Zabka
  * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ZeebeSourceConfig extends ConnectorConfig
+public class ZeebeSourceConfig extends ZeebeConfig
 {
-    private String name;
-    private int zeebe_client_requestTimeout = 10000;
-    private boolean zeebe_client_security_plaintext = true;
     private String zeebe_client_job_worker = "kafka-connector";
     private int zeebe_client_worker_maxJobsActive = 100;
     private int zeebe_client_job_pollinterval = 2000;
     private int zeebe_client_job_timeout = 5000;
     private String job_types = "sendMessage";
     private String job_header_topics = "kafka-topic";
-    private boolean mongoDB_logging = false;
-    private String zeebe_client_broker_contactPoint;
 
     /**
      * Constructor for ZeebeSourceConfig.
@@ -47,25 +42,9 @@ public class ZeebeSourceConfig extends ConnectorConfig
             @JsonProperty("job_types") String job_types,
             @JsonProperty("job_header_topics") String job_header_topics,
             @JsonProperty("mongoDB_logging") Boolean mongoDB_logging) {
-        super("io.zeebe.kafka.connect.ZeebeSourceConnector");
-        this.name = name;
+        super("io.zeebe.kafka.connect.ZeebeSourceConnector", name, mongoDB_logging);
         this.job_types = job_types;
         this.job_header_topics = job_header_topics;
-        this.mongoDB_logging = mongoDB_logging==null?false:mongoDB_logging;
-    }
-    /**
-     * The timeout for requests to the Zeebe broker.
-     * It's value is set to 10 seconds.
-     * @return The timeout in milliseconds
-     */
-    @JsonGetter("zeebe.client.requestTimeout")
-    public int getZeebe_client_requestTimeout() {
-        return zeebe_client_requestTimeout;
-    }
-
-    @JsonGetter("zeebe.client.security.plaintext")
-    public boolean isZeebe_client_security_plaintext() {
-        return zeebe_client_security_plaintext;
     }
 
     @JsonGetter("zeebe.client.job.worker")
@@ -88,11 +67,6 @@ public class ZeebeSourceConfig extends ConnectorConfig
         return zeebe_client_job_timeout;
     }
 
-    @JsonIgnore
-    public String getName() {
-        return name;
-    }
-
     /**
      * A comma-separated list of job types that should be consumed by the connector
      * @return Job types that should be consumed
@@ -110,26 +84,4 @@ public class ZeebeSourceConfig extends ConnectorConfig
     public String getJob_header_topics() {
         return job_header_topics;
     }
-
-    /**
-     * mongoDB_logging tells us if the events for this sink connector should be loggend to <strong>MongoDB</strong>.
-     * This is not a property of the <em>Zeebe Sink Connector</em>.
-     * It will not be written to the json config file.
-     * @return if the events for this connector get logged
-     */
-    @JsonIgnore
-    public boolean isMongoDB_logging() {
-        return mongoDB_logging;
-    }
-
-    @JsonGetter("zeebe.client.broker.contactPoint")
-    public String getZeebe_client_broker_contactPoint() {
-        return zeebe_client_broker_contactPoint;
-    }
-
-    public void setZeebe_client_broker_contactPoint(String zeebe_client_broker_contactPoint) {
-        this.zeebe_client_broker_contactPoint = zeebe_client_broker_contactPoint;
-    }
-
-
 }
