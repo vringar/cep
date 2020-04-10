@@ -18,7 +18,7 @@ public abstract class ConnectorConfig
 
     /**
      * The Constructor of the ConnectoConfig Class.
-     * @param connector_class The connector.class where the <strong>Kafka Connect</strong> connector is implemented.
+     * @param connector_class The name of the connectorclass where the <strong>Kafka Connect</strong> connector is implemented.
      */
     public ConnectorConfig(String connector_class) {
         this.connector_class = connector_class;

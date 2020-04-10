@@ -3,6 +3,10 @@ package berlin.hu.cep.connector;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * Abstract superclass for <strong>Zeebe</strong>configurations.
+ * <p>{@link ZeebeSinkConfig ZeebeSinkConfig} and {@link ZeebeSourceConfig ZeebeSourceConfig} share a lot of common attributes and methodes. They can be found in this abstract superclass.</p>
+ * */
 public abstract class ZeebeConfig extends ConnectorConfig{
 
     private String name;
@@ -11,12 +15,18 @@ public abstract class ZeebeConfig extends ConnectorConfig{
     private boolean zeebe_client_security_plaintext = true; //TODO: Set to false, maybe?
     private String zeebe_client_broker_contactPoint;
 
+    /**
+     * Construor of a ZeebeConfiguration.
+     * It sets all attrivutes which needs to be set by the constructors of the child classes.
+     * @param connector_class The name of the connectorclass where the <strong>Kafka Connect</strong> connector is implemented.
+     * @param name The name of the connector.
+     * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong>database.
+     */
     public ZeebeConfig(String connector_class, String name, Boolean mongoDB_logging) {
         super(connector_class);
         this.name = name;
         this.mongoDB_logging = mongoDB_logging==null?false:mongoDB_logging; //If mongoDB_logging is not set in json
     }
-
 
     /**
      * The address of the Zeebe broker to connect to.
@@ -47,7 +57,7 @@ public abstract class ZeebeConfig extends ConnectorConfig{
 
     /**
      * Disables secure connections to the gateway for local development setups.
-     * It's value is set to false
+     * It's value is set to true //TODO: Set to false?
      * @return Do connection to gateways are plaintext?
      */
     @JsonGetter("zeebe.client.security.plaintext")
@@ -66,6 +76,11 @@ public abstract class ZeebeConfig extends ConnectorConfig{
         return mongoDB_logging;
     }
 
+    /**
+     * Returns the name of the configuration.
+     * The name is not included into generated json, because it is not part of the offical ZeebeConnector specification.
+     * @return the name of the configuration
+     */
     @JsonIgnore
     public String getName() {
         return name;
