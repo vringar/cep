@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * A class which holds several <strong>Kafka Connect</strong> configurations, which connect to <strong>Zeebe</strong>.
- * An instance of the class is designed to be initialized through a json-file with the {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) readValue() methode from the Jackson package}.
+ * <p>An instance of the class is designed to be initialized through a json-file with the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> readValue() methode from the Jackson package</a>.</p>
  * One ConnectClient holds the needed urls of the systems which should be configured.
  * One ConnectClient can configure as many Zeebesink and -source endpoints as needed.
  * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.
@@ -26,7 +26,7 @@ import java.util.List;
  *
  * @see ZeebeSourceConfig
  * @see ZeebeSinkConfig
- * @see com.fasterxml.jackson.databind.ObjectMapper
+ * @see <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html">ObjectMapper</a>
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ConnectClient
@@ -40,7 +40,7 @@ public class ConnectClient
     private List<ZeebeSinkConfig> sink_configs;
 
     /**
-     * Constructor for the class {@link ConnectClient}, not suitable for creation with {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) Jacksons readValue() methode}.
+     * Constructor for the class {@link ConnectClient}, not suitable for creation with <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> Jacksons readValue() methode</a>.
      * This constructor does not need mongoDB options. It is to be used when no logging via <strong>mongoDB</strong> should happen.
      *
      * @param connector_host the hostname on which <strong>Kafka Connect</strong> runs.
@@ -65,7 +65,7 @@ public class ConnectClient
 
 
     /**
-     * Constructor for the class ConnectClient, suitable for creation with {@link com.fasterxml.jackson.databind.ObjectMapper#readValue(String, Class) jacksons readValue() methode}
+     * Constructor for the class {@link ConnectClient}, suitable for creation with <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> Jacksons readValue() methode</a>.
      *
      * @param connector_host the hostname on which <strong>Kafka Connect</strong> runs.
      * @param connector_port the port on which <strong>Kafka Connect</strong> runs.
@@ -98,7 +98,7 @@ public class ConnectClient
     }
 
     /**
-     * Deploys the <strong>Kafka Connect</strong> according to @{@link sink_configs the sink configurations} and @{@link source_configs the source configurations}
+     * Deploys the <strong>Kafka Connect</strong> according to {@link sink_configs the sink configurations} and {@link source_configs the source configurations}
      *
      * @throws Exception if somethings goes wrong //TODO: Exception specification
      * */
