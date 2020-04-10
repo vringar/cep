@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * A class to configure a <em>Zeebe Sink Connector</em> with sane defaults.
  * <p>The connector is designed to get complex events from a running <strong>Siddhi</strong>instace</p>
  * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Sink Connetor</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent to this sink connector.</p>
- *<p> An object of this class can be converted to a properties file for the MongDB Kafka Sink Connector in json <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
+ *<p> An object of this class can be converted to a properties file for the Zeebe Sink Connector in json <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
  *
  * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Home of the Kafka Connect connector for Zeebe</a>
  * @author Lukas Gehring
@@ -153,6 +153,7 @@ public class ZeebeSinkConfig extends ConnectorConfig
 
     /**
      * JSONPath query to use to extract the message name from the record
+     * @return JSONPath query for the message name
      */
     @JsonGetter("message.path.messageName")
     public String getMessage_path_messageName() {
@@ -161,6 +162,7 @@ public class ZeebeSinkConfig extends ConnectorConfig
 
     /**
      * JSONPath query to use to extract the correlation key from the record
+     * @JSONPath query for the correlation key
      */
     @JsonGetter("message.path.correlationKey")
     public String getMessage_path_correlationKey() {
@@ -169,6 +171,7 @@ public class ZeebeSinkConfig extends ConnectorConfig
 
     /**
      * JSONPath query to use to extract the variables from the record
+     * @JSONPath query for variables from the record
      */
     @JsonGetter("message.path.variables")
     public String getMessage_path_variables() {
@@ -177,6 +180,7 @@ public class ZeebeSinkConfig extends ConnectorConfig
 
     /**
      * JSONPath query to use to extract the time to live from the record
+     * @return JSONPath query for time to live
      */
     @JsonGetter("message.path.timeToLive")
     public String getMessage_path_timeToLive() {
@@ -184,7 +188,7 @@ public class ZeebeSinkConfig extends ConnectorConfig
     }
 
     /**
-     * mongoDB_logging tells us if the events for this source connector should be loggend to <strong>MongoDB</strong>.
+     * mongoDB_logging tells us if the events for this sink connector should be loggend to <strong>MongoDB</strong>.
      * This is not a property of the <em>Zeebe Sink Connector</em>.
      * It will not be written to the json config file.
      * @return if the events for this connector get logged
