@@ -18,16 +18,10 @@ import java.util.LinkedList;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MongoDBConnectConfig extends ConnectorConfig
 {
-    private String connector_class = "com.mongodb.kafka.connect.MongoSinkConnector";
-    private int tasks_max = 1;
     private String connection_uri = "mongodb://mongo:27017";
     private List<String> topics;
     private String database;
     private String collection;
-    private String key_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean key_converter_schemas_enable = false;
-    private String value_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean value_converter_schemas_enable = false;
 
     /**
      * Constructor for MongoDBConnectConfig.
@@ -40,6 +34,7 @@ public class MongoDBConnectConfig extends ConnectorConfig
      * @param collection MongoDB collection name to write to.
      * */
     public MongoDBConnectConfig(String connection_uri, String topic,String database, String collection){
+        super("com.mongodb.kafka.connect.MongoSinkConnector");
         this.topics = new LinkedList<String>();
         this.topics.add(topic);
         this.database = database;
@@ -56,32 +51,12 @@ public class MongoDBConnectConfig extends ConnectorConfig
     }
 
     /**
-     * The connector class is the name of the class which implements the <strong>Kafka Connector</strong>.
-     * In this case it is always "com.mongodb.kafka.connect.MongoSinkConnector"
-     * @return the connector_class
-     */
-     // TODO: Can this be in the abstract class?
-    @JsonGetter("connector.class")
-    public String getConnector_class() {
-        return connector_class;
-    }
-
-    /**
      * The uri of the <strong>MongoDB</strong> instance.
      * @return <strong>MongoDB</strong>uri to connect to.
      */
     @JsonGetter("connection.uri")
     public String getConnection_uri() {
         return connection_uri;
-    }
-
-    /**
-     * TODO: What does this do? Can it be in the abstract class?
-     * @return the tasks_max
-     */
-    @JsonGetter("tasks.max")
-    public int getTasks_max() {
-        return tasks_max;
     }
 
     /**
@@ -100,41 +75,5 @@ public class MongoDBConnectConfig extends ConnectorConfig
      */
     public String getCollection() {
         return collection;
-    }
-
-    /**
-     * TODO: What does it do? Can it be in the abstract class?
-     * @return the key_converter
-     */
-    @JsonGetter("key.converter")
-    public String getKey_converter() {
-        return key_converter;
-    }
-
-    /**
-     * TODO: What does it do? Can it be in the abstract class?
-     * @return the value_converter
-     */
-    @JsonGetter("value.converter")
-    public String getValue_converter() {
-        return value_converter;
-    }
-
-    /**
-     * TODO: What does it do? Can it be in the abstract class?
-     * @return the key_converter_schemas_enable
-     */
-    @JsonGetter("key.converter.schemas.enable")
-    public boolean isKey_converter_schemas_enable() {
-        return key_converter_schemas_enable;
-    }
-
-    /**
-     * TODO: What does it do? Can it be in the abstract class?
-     * @return the value_converter_schemas_enable
-     */
-    @JsonGetter("value.converter.schemas.enable")
-    public boolean isValue_converter_schemas_enable() {
-        return value_converter_schemas_enable;
     }
 }

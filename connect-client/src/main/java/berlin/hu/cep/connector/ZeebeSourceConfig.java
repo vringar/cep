@@ -23,12 +23,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class ZeebeSourceConfig extends ConnectorConfig
 {
     private String name;
-    private String connector_class = "io.zeebe.kafka.connect.ZeebeSourceConnector";
-    private int tasks_max = 1;
-    private String key_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean key_converter_schemas_enable = false;
-    private String value_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean value_converter_schemas_enable = false;
     private int zeebe_client_requestTimeout = 10000;
     private boolean zeebe_client_security_plaintext = true;
     private String zeebe_client_job_worker = "kafka-connector";
@@ -43,7 +37,6 @@ public class ZeebeSourceConfig extends ConnectorConfig
     /**
      * Constructor for ZeebeSourceConfig.
      * Note that since this class has some assumptions not all configuration properties provided by the official <em>Zeebe Source Connector</em> can be set here.
-     * @param name TODO Do we need that? Isn't PostObject enought?
      * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong>database.
      * @param job_types a comma-separated list of job types that should be consumed by the connector
      * @param job_header_topics the custom service task header which specifies to which <strong>Kafka</strong>topics the message should be published to.
@@ -54,48 +47,12 @@ public class ZeebeSourceConfig extends ConnectorConfig
             @JsonProperty("job_types") String job_types,
             @JsonProperty("job_header_topics") String job_header_topics,
             @JsonProperty("mongoDB_logging") Boolean mongoDB_logging) {
+        super("io.zeebe.kafka.connect.ZeebeSourceConnector");
         this.name = name;
         this.job_types = job_types;
         this.job_header_topics = job_header_topics;
         this.mongoDB_logging = mongoDB_logging==null?false:mongoDB_logging;
     }
-
-    //TODO Remove
-    @JsonIgnore
-    public String getName() {
-        return name;
-    }
-
-    @JsonGetter("connector.class")
-    public String getConnector_class() {
-        return connector_class;
-    }
-
-    @JsonGetter("tasks.max")
-    public int getTasks_max() {
-        return tasks_max;
-    }
-
-    @JsonGetter("key.converter")
-    public String getKey_converter() {
-        return key_converter;
-    }
-
-    @JsonGetter("key.converter.schemas.enable")
-    public boolean isKey_converter_schemas_enable() {
-        return key_converter_schemas_enable;
-    }
-
-    @JsonGetter("value.converter")
-    public String getValue_converter() {
-        return value_converter;
-    }
-
-    @JsonGetter("value.converter.schemas.enable")
-    public boolean isValue_converter_schemas_enable() {
-        return value_converter_schemas_enable;
-    }
-
     /**
      * The timeout for requests to the Zeebe broker.
      * It's value is set to 10 seconds.
@@ -129,6 +86,11 @@ public class ZeebeSourceConfig extends ConnectorConfig
     @JsonGetter("zeebe.client.job.timeout")
     public int getZeebe_client_job_timeout() {
         return zeebe_client_job_timeout;
+    }
+
+    @JsonIgnore
+    public String getName() {
+        return name;
     }
 
     /**
