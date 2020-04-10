@@ -37,7 +37,7 @@ public class MongoDBConnectConfig extends ConnectorConfig
      * @param connection_uri The uri of the <strong>MongoDB</strong>-instance.
      * @param topic The <strong>Kafka</strong>topic which should be logged in the database.
      * @param database The name of the database the sink writes to
-     * @param collection Sink MongoDB collection name to write to.
+     * @param collection MongoDB collection name to write to.
      * */
     public MongoDBConnectConfig(String connection_uri, String topic,String database, String collection){
         this.topics = new LinkedList<String>();
@@ -68,6 +68,7 @@ public class MongoDBConnectConfig extends ConnectorConfig
 
     /**
      * The uri of the <strong>MongoDB</strong> instance.
+     * @return <strong>MongoDB</strong>uri to connect to.
      */
     @JsonGetter("connection.uri")
     public String getConnection_uri() {
@@ -84,14 +85,18 @@ public class MongoDBConnectConfig extends ConnectorConfig
     }
 
     /**
-     * The name of the <strong>MongoDB</strong>database to which the sinkconnector writes.
+     * A <strong>MongoDB</strong>instace has several databases it manages.
+     * Databases hold collection of (BSON)documents.
+     * @return The name of the <strong>MongoDB</strong>database to log to.
      */
     public String getDatabase() {
         return database;
     }
 
     /**
-     * The name of the <strong>MongoDB</strong>collection to which the sinkconnector writes.
+     * One <strong>MongoDB</strong>database holds several collection.
+     * A collections holds several (BSON)documents.
+     * @return <strong>MongoDB</strong>collection to database to log to.
      */
     public String getCollection() {
         return collection;
