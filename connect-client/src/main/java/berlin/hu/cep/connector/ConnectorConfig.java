@@ -6,6 +6,14 @@ import com.fasterxml.jackson.annotation.JsonGetter;
  * An abstract class for <strong>Kafka Connect</strong> configurations.
  * <p>As a attribute of an @{@link berlin.hu.cep.connector.ConnectorPostObject ConnectorPostObject} it can be send to a <strong>Kafka Connect</strong>instance
  * via a POST-methode of the <strong>Kafka Connect</strong>-REST-API.</p>
+ *
+ * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
+ * @author Jost Hermann Triller
+ * @author Stefan Zabka
+ *
+ * TODO see Kafka Connect doku...
  * */
 public abstract class ConnectorConfig
 {

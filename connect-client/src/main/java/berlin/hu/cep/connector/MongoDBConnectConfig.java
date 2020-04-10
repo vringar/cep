@@ -13,6 +13,11 @@ import java.util.LinkedList;
  * An object of this class can be converted to a properties file for the <em>MongDB Kafka Sink Connector</em> in json with the<a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.
  *
  * @see <a href="https://docs.mongodb.com/kafka-connector/current/kafka-sink/">MongoDB Kafka Sink Connector Documentation</a>
+ * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
+ * @author Jost Hermann Triller
+ * @author Stefan Zabka
  * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MongoDBConnectConfig extends ConnectorConfig

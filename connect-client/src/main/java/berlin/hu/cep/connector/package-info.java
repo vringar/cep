@@ -13,8 +13,10 @@
  * Optionally the package can configure <em>MongoDB Connectors</em> so that events get logged in a MongoDB instance.</p>
  *
  * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
  * @author Jost Hermann Triller
- * @since 0.0
+ * @author Stefan Zabka
  * @see <a href="kafka.apache.org">Apache Kafka</a>
  * @see <a href="zeebe.io">Zeebe</a>
  * @see <a href="siddhi.io">Siddhi</a>

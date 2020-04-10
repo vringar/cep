@@ -6,6 +6,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 /**
  * Abstract superclass for <strong>Zeebe</strong>configurations.
  * <p>{@link ZeebeSinkConfig ZeebeSinkConfig} and {@link ZeebeSourceConfig ZeebeSourceConfig} share a lot of common attributes and methodes. They can be found in this abstract superclass.</p>
+ *
+ * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
+ * @author Jost Hermann Triller
+ * @author Stefan Zabka
+ * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Kafka Connect connector for Zeebe</a>
  * */
 public abstract class ZeebeConfig extends ConnectorConfig{
 

@@ -24,7 +24,10 @@ import java.util.List;
  * The configuration can be deployed with the {@link #deploy() deploy() methode} and deleted with the {@link #delete() delete() methode}.
  *
  * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
  * @author Jost Hermann Triller
+ * @author Stefan Zabka
  *
  * @see ZeebeSourceConfig
  * @see ZeebeSinkConfig
