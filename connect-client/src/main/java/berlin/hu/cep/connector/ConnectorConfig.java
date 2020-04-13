@@ -43,7 +43,8 @@ public abstract class ConnectorConfig
     }
 
     /**
-     * TODO: What does this do?
+     * Returns tasks.max (the maximum number of tasks that should be created for this connector. The connector may create fewer tasks if it cannot achieve this level of parallelism)
+     * (https://docs.confluent.io/current/connect/managing/configuring.html)
      * @return the tasks_max
      */
     @JsonGetter("tasks.max")
@@ -52,7 +53,8 @@ public abstract class ConnectorConfig
     }
 
     /**
-     * TODO: What does it do?
+     * Returns key.converter (Converter class for key Connect data. This controls the format of the data that will be written to Kafka for source connectors or read from Kafka for sink connectors. Popular formats include Avro and JSON.)
+     * (https://docs.confluent.io/current/connect/references/allconfigs.html#connect-allconfigs)
      * @return the key_converter
      */
     @JsonGetter("key.converter")
@@ -61,7 +63,8 @@ public abstract class ConnectorConfig
     }
 
     /**
-     * TODO: What does it do?
+     * Returns value.converter (Converter class for value Connect data. This controls the format of the data that will be written to Kafka for source connectors or read from Kafka for sink connectors. Popular formats include Avro and JSON.)
+     * (https://docs.confluent.io/current/connect/references/allconfigs.html#connect-allconfigs)
      * @return the value_converter
      */
     @JsonGetter("value.converter")
@@ -70,7 +73,7 @@ public abstract class ConnectorConfig
     }
 
     /**
-     * TODO: What does it do?
+     * Returns whether the key converter has JSON schemas enabled.
      * @return the key_converter_schemas_enable
      */
     @JsonGetter("key.converter.schemas.enable")
@@ -79,7 +82,7 @@ public abstract class ConnectorConfig
     }
 
     /**
-     * TODO: What does it do?
+     * Returns whether the value converter has JSON schemas enabled.
      * @return the value_converter_schemas_enable
      */
     @JsonGetter("value.converter.schemas.enable")
