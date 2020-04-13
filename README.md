@@ -242,7 +242,12 @@ Dokumentation dienen.
 ##### Siddhi-Client
 **TODO**  
 Der Sourcecode des [Deployers](./deployer/src/main/java/berlin/hu/cep/Deployer.java) soll hier als weitere Dokumentation dienen.
-
+_________________________________
+#### Javadoc
+Der Connect-Client (**TODO**: vielleicht auch Siddhi-Client?) ist mit Javadoc dokumentiert.
+Zur Generierung der Javadoc-Dateien muss im `monorepo`-Directory `mvn clean javadoc:aggregate`
+ausgeführt werden. Die html-Dateien können dann unter `monorepo/target/site/apidocs/berlin/...`
+gefunden werden.  
 _________________________________
    
 - [ ] Offene Punkte/Einschränkungen/Systemgrenzen
