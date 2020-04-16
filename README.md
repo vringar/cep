@@ -154,8 +154,11 @@ Es basierd auf einer Untermenge der JavaScript Programmiersprache.
 Die Konfiguration unseres Deployers wird über eine JSON Schnittstelle erledigt.
 ##### Retrofit
 [Ein typensicherer HTTP-Client für Java.](https://square.github.io/retrofit/), unser
-Siddhi-Client und unser Connect-Client benutzen Retrofit, um mit Siddhi, b.z.w Kafka-Connect
+Siddhi-Client und unser Connect-Client benutzen Retrofit, um mit Siddhi, bzw. Kafka-Connect
 zu kommunizieren.
+##### Jackson
+[Jackson](https://github.com/FasterXML/jackson) ist eine JSON-Bibliothek für Java.
+Unser Deployer nutzt sie um Konfigurationsdateien zu lesen und unsere Bibliotheken erstellen damit JSON-Konfigurationsdateien.
 ##### Zeebe
 [Zeebe](https://zeebe.io/) ist ein in Java geschriebenes freies Workflow-Management-System, mit dem Geschäftsprozesse
 in BPMN 2.0 definiert und ausgeführt werden können.
