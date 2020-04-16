@@ -54,7 +54,7 @@ _________________________________
      - [ ] Python (für Beispiel)
 
 #### Tutorial
-Zum kompilieren des Deployers muss im Monorepo Ordner `mvn clean package` ausgeführt werden.
+Zum Kompilieren des Deployers muss im Monorepo Ordner `mvn clean package` ausgeführt werden.
 Zum Starten muss `java -jar deployer/target/deployer-0.0-SNAPSHOT-jar-with-dependencies.jar
 -deploy deployer/deployer_config.json` ausgeführt werden.
 _________________________________
@@ -80,40 +80,40 @@ _________________________________
 
 ![alt text](./cep_architecture.png "CEP Architektur")
 Die Workflow-Engine Zeebe und die CEP-Engine Siddhi werden über Kafka verbunden.
-Die nötigen Konfiguration die über docker-compose hinausgeht wird von unserer Anwendung Deployer übernommen.
+Die nötigen Konfiguration, die über docker-compose hinausgeht, wird von unserer Anwendung Deployer übernommen.
 ##### Apache Kafka
 Apache Kafka ist ein System, das eine Schnittstelle für Datenströme verschiedener Systeme bereitstellt.
-Die Datenströme stellt es in sogenannten **Kafka-Topics** zur Verfügung. **Producer** schreibe Daten in ein oder mehrere **Kafka-Topics**, **Consumer** abonnieren ein oder mehrere **Kafka-Topics** und verarbeiten die darüber gesendeten Daten.
+Die Datenströme stellt es in sogenannten **Kafka-Topics** zur Verfügung. **Producer** schreiben Daten in ein oder mehrere **Kafka-Topics**, **Consumer** abonnieren ein oder mehrere **Kafka-Topics** und verarbeiten die darüber gesendeten Daten.
 In unserem Fall werden explizite Zeebe Workflow Events und externe Events an Kafka übergeben,
-um dann von Siddhi gelesen zu werden, um komplexe Events zu erkennen.
+um dann von Siddhi gelesen zu werden, sodass komplexe Events erkannt werden können.
 Siddhi übergibt die erkannten komplexen Events an Kafka, von wo sie von Zeebe gelesen werden und
 dann entsprechend in Workflowinstanzen behandelt werden.
 Der Vorteil Kafka statt einer eigenen Lösung zur Verbindung von Siddhi und Zeebe zu nutzen, ist,
 dass erstens für die verschiedenen notwendigen Operationen (Zeebe-zu-Kafka, Kafka-zu-Zeebe,
 Siddhi-zu-Kafka, Kafa-zu-Siddhi) schon Lösungen existieren, die genutzt werden können.
-Zweitens ist es so ohne größeres Refactoring mögliche externe Systeme an die verschiedenen Datenströme
-anzuschließen, so können z.B. erkannte komplexe Events in einer Datenbank geloggt werden.
+Zweitens ist es ohne größeres Refactoring mögliche externe Systeme an die verschiedenen Datenströme
+anzuschließen. So können z.B. erkannte komplexe Events in einer Datenbank geloggt werden.
 ##### Kafka-Siddhi-Verbindung
 Siddhi benötigt nur noch einige JARs um die [siddhi-io-kafka](https://siddhi-io.github.io/siddhi-io-kafka/)
 Extension benutzen zu können.
 Die Verbindung zwischen Kafka und Siddhi wird deshalb über (**TODO**:docker-compose/docker-files?) gelöst.
 ##### Kafka-Zeebe-Verbindung
-Die Verbindung zwischen Kafka und Zeebe wird mithilfe eine Kafka Connect Connectors realisiert.
+Die Verbindung zwischen Kafka und Zeebe wird mithilfe eines Kafka-Connect-Connectors realisiert.
 [kafka-connect-zeebe](https://github.com/zeebe-io/kafka-connect-zeebe) erlaubt es Nachrichten von
 Zeebe-Workflow-Instanzen auf ein Kafka-Topic zu schreiben.
 Außerdem können Nachrichten von einem Kakfa-Topic an ein Workflow übergeben werden.
-Dafür müssen von kafka-zeebe-connect benutzte Source- und Sink-Connector entsprechend den Workflows und
-Siddhi-Files konfiguriert werden. Dafür wird von uns eine Library, den Connect-Client, bereitgestellt,
+Dafür müssen von kafka-zeebe-connect benutzte Source- und Sink-Connectors entsprechend des Workflows und
+der Siddhi-Files konfiguriert werden. Dafür wird von uns eine Library, den Connect-Client, bereitgestellt,
 dessen Schnittstelle ausführlich unter **Schnittstellen, Connect-Client** beschrieben wird.
 ##### Siddhi Konfiguration
 An Siddhi müssen die entsprechenden Siddhi-Files übergeben werden.
 Dazu stellen wir eine Bibliothek, den Siddhi-Client zur Verfügung,
 die es erlaubt einfach die zu nutzenden Siddhi-Files an Siddhi zu senden.
-Die Schnittelle ist genauer unter **Schnittstellen, Siddhi-Client** beschrieben:
+Die Schnittelle ist genauer unter **Schnittstellen, Siddhi-Client** beschrieben.
 ##### Deployer
 In den meisten Anwendungfällen ist es ausreichend auf die Funktionalität von Connect-Client und Siddhi-Client
 über den Deployer zuzugreifen.
-Der Deployer ermöglicht es über eine einzelne relativ einfache JSON Textdatei sowohl Siddhi als auch
+Der Deployer ermöglicht es über eine einzelne, einfache JSON Textdatei sowohl Siddhi als auch
 kafka-connect-zeebe zu konfigurieren. Die genaue Form der JSON-Datei ist auch
 unter **Schnittstellen, Deployer** beschrieben.
 _________________________________
@@ -186,7 +186,7 @@ _________________________________
    - [ ] Siddhi-Client Schnitstellen
 #### Schnittstellen
 ##### Deployer
-Der Deployer ist eine Java Anwendung an die eine JSON Konfigurationsdatei übergeben wird, die Siddhi und
+Der Deployer ist eine Java Anwendung, an die eine JSON Konfigurationsdatei übergeben wird, die Siddhi und
 die Verbindung zwischen Zeebe und Kafka beschreibt.
 Zum Erstellen einer Konfiguration:
 ```
@@ -240,10 +240,10 @@ Weitere speziellere Eigenschaften zu dem Kafka-Connect-Zeebe kann man hier finde
 https://github.com/zeebe-io/kafka-connect-zeebe
 ##### Connect-Client
 Der Connect-Client kann auch über ein Java-Programm als Bibliothek benutzt werden.
-Es wird eine Klasse `ConnectClient` bereitgestellt, der Konstruktor nimmt ein Konfigurationsklasse
+Es wird eine Klasse `ConnectClient` bereitgestellt. Der Konstruktor nimmt eine Konfigurationsklasse
 `ConnectConfig`, die z.B. mithilfe von [Jackson](https://github.com/FasterXML/jackson) aus einer
 json-Textdatei befüllt werden kann, als Parameter.
-Die beiden Memberfunktionen `deploy()`, `delete()` setzen diese Konfiguration ein, b.z.w entfernen sie wieder
+Die beiden Memberfunktionen `deploy()` und `delete()` setzen diese Konfiguration ein, bzw. entfernen sie wieder
 aus dem laufenden Kafka-Connect System.
 Die Bedeutungen der verschiedenen Felder in der `ConnectConfig` stimmen mit den Bedeutungen überein,
 die unter **Schnittstellen, Deployer** bezüglich des `"connector_config"` JSON-Felds genannt wurden.
@@ -280,14 +280,14 @@ während des Betriebs eingeführt werden.
 Mit unserem System müssen alle Zeebe-Events explizit im BPMN-Worklow angegeben werden.
 Zeebe stellt in Exportern sogenannte Records zur Verfügung, die Informationen über den
 Zustand von Workflow-Instanzen geben, ob z.B. ein bestimmter Job beendet wurde.
-Diese Record könnten zusätzlich zu den expliziten Events über Kafka an Siddhi gesendet werden.
+Diese Records könnten zusätzlich zu den expliziten Events über Kafka an Siddhi gesendet werden.
 Zeebe stellt sogar schon [eine einfache Implementation](https://github.com/zeebe-io/zeebe-kafka-exporter)
 für einen Zeebe-Exporter, der Zeebe-Records in einem Protobuf Schema auf ein Kafka-Topic
 schreibt.
-Siddhi, b.z.w. die Siddhi-Files, muss dann zusätzlich noch konfiguriert um Protobufs
+Siddhi, bzw. die Siddhi-Files müssen dann zusätzlich noch konfiguriert um Protobufs
 erkennen zu können.
 
-##### Deployer Verbesserungen
+##### Deployer Verbesserungen (TODO: Zu komplexe Satzstrukturen)
 Im Deployer und in den Client Bibliotheken wird nur bedingt auf Fehler getestet und nur
 primitive Fehlernachrichten ausgegeben.
 So könnten z.B. der Connect-Client und der Siddhi-Client noch bessere Fehleranalysen
@@ -295,7 +295,7 @@ betreiben bezüglich der Verbindung zu dem Siddhi-Host/Kafka-Connect-Host.
 Eine weitere Verbesserung dieser Clienten wäre, mithilfe der BPMN-Workflow Dateien, die
 eingesetzt werden sollen, einen Sanity-Check durchzuführen, um zu überprüfen, ob es
 offensichtliche Ungereimtheiten in den Siddhi-Files oder in der Kafka-Connect Konfiguration
-gibt.
+gibt. 
 Eventuell kann es sinnvoll sein, den Deployer mit einem Zeebe-Clienten zu erweitern, der
 sich um die BPMN-Workfows kümmert, was vor allem nützlich sein kann, wenn die oben
 angesprochenen Überprüfung der Konfiguration anhand der BPMN-Workflows eingesetzt wird.
