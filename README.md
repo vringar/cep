@@ -170,8 +170,6 @@ Kafka ist in unserer Architektur der zentrale Kommunikation-Kanal zwischen Zeebe
 [Kafka Connect](https://docs.confluent.io/3.0.0/connect/) bietet eine Schnittstelle zum Laden/Exportieren von Daten aus/in Drittsysteme.
 Kafka Connect führt sogenannte Konnektoren aus, welche die eigentliche Kommunikation mit dem Drittsystem übernehmen.
 Es gibt bereits viele Konnektoren, die genutzt werden können.
-Kafka Connect macht es uns wesentlich einfacher eine Verbindung zwischen Kafka und Zeebe
-herzustellen.(TODO: Den Satz streichen? Ist so irgendwie so ein empfinden? ~lgehr)
 ##### MongoDB
 [MongoDB](https://www.mongodb.com/) ist ein dokument-orientiertes Datenbankprogramm welches JSON-artige Dokumente speichert.
 Als **NoSQL** Datenbankprogramm bietet es den Vorteil kein Relationschema zu benötigen. Die Ordnung der Daten ist durch die Daten selbst gegeben, da diese im JSON-Format vorliegen. Aufwändige Designentscheidungen zum Datenbank Aufbau fallen dafür weg.
