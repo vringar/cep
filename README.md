@@ -172,6 +172,10 @@ Kafka Connect führt sogenannte Konnektoren aus, welche die eigentliche Kommunik
 Es gibt bereits viele Konnektoren, die genutzt werden können.
 Kafka Connect macht es uns wesentlich einfacher eine Verbindung zwischen Kafka und Zeebe
 herzustellen.(TODO: Den Satz streichen? Ist so irgendwie so ein empfinden? ~lgehr)
+##### MongoDB
+[MongoDB](https://www.mongodb.com/) ist ein dokument-orientiertes Datenbankprogramm welches JSON-artige Dokumente speichert.
+Als **NoSQL** Datenbankprogramm bietet es den Vorteil kein Relationschema zu benötigen. Die Ordnung der Daten ist durch die Daten selbst gegeben, da diese im JSON-Format vorliegen. Aufwändige Designentscheidungen zum Datenbank Aufbau fallen dafür weg.
+Unser Produkt nutzt MongoDB um die Kommunikation zwischen Zeebe und Siddhi zu protokollieren.
 _________________________________
 
 
