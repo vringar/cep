@@ -247,8 +247,7 @@ Die beiden Memberfunktionen `deploy()`, `delete()` setzen diese Konfiguration ei
 aus dem laufenden Kafka-Connect System.
 Die Bedeutungen der verschiedenen Felder in der `ConnectConfig` stimmen mit den Bedeutungen überein,
 die unter **Schnittstellen, Deployer** bezüglich des `"connector_config"` JSON-Felds genannt wurden.
-Der Sourcecode des [Deployers](./deployer/src/main/java/berlin/hu/cep/Deployer.java) soll hier als weitere
-Dokumentation dienen.
+Die Funktionsweise und API des Connect-Clients sind mit Javadoc detailiert dokumentiert. Siehe dazu **Javadoc**
 ##### Siddhi-Client
 **TODO**
 Der Sourcecode des [Deployers](./deployer/src/main/java/berlin/hu/cep/Deployer.java) soll hier als weitere Dokumentation dienen.
