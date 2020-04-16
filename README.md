@@ -197,7 +197,7 @@ Zum Entfernen einer Konfiguration:
  java -jar ./deployer/target/deployer-0.0-SNAPSHOT.jar -remove deployer_config.json
 ```
 Eine Config-Datei muss folgendermaßen aussehen (C-Style Kommentare beschreiben die einzelnen Felder,
-müssen jedoch vor Benutzung entfernt werden): (**TODO**: Feldernamen anpassen, Übereinstimmung mit aktueller Version)
+müssen jedoch vor Benutzung entfernt werden): (**TODO**: Feldernamen anpassen)
 ```
 {
   "connector_config":
@@ -205,12 +205,15 @@ müssen jedoch vor Benutzung entfernt werden): (**TODO**: Feldernamen anpassen, 
     "connector_host": "localhost", //kafka-connect hostname
     "connector_port": "8083", //kafka-connect port
     "zeebe_client_broker_contactPoint": "zeebe:26500", // selbsterklärend, hostname:port
-    "source_configs": // Array, das alle Kafka-Connect Source Configs enthält
+    "mongoDB_url": "mongodb://mongo:27017", //URL der MongoDB-instanz
+    "mongoDB_database": "Ping_Pong", //Name der Datenbank in die protokolliert werden soll.
+    "source_configs": // Array, das alle Kafka-Connect Zeebesource Konfigurationen enthält
     [
       { // Kafka-Connect Source Config
         "name": "ping", // eindeutiger Name dieser Konfiguration
         "job_types": "ping", // in einer bpmn-Datei muss dieses Feld mit dem type der "zeebe:taskDefinition" übereinstimmen
-        "job_header_topics": "topic" // in einer bpmn-Datei unter einer taskDefinition mit dem type job_type, muss unter zeebe:taskHeaders bei einem zeebe:header mit key="kafka-topic" das value mit diesem Feld übereinstimmen
+        "job_header_topics": "topic", // in einer bpmn-Datei unter einer taskDefinition mit dem type job_type, muss unter zeebe:taskHeaders bei einem zeebe:header mit key="kafka-topic" das value mit diesem Feld übereinstimmen
+        "mongoDB_logging": true // Gibt an ob alle Daten die über diesen Connector gehgen protokolliert werden sollen.
       }
     ],
     "sink_configs":
@@ -221,7 +224,8 @@ müssen jedoch vor Benutzung entfernt werden): (**TODO**: Feldernamen anpassen, 
         "message_path_messageName": "$.name", // Die folgenden Felder beschreiben, wie eine Nachricht, die von dem oben benannten Topic gelesen wird, in bestimmte Objekte im Zeebe-Workflow gemappt werden
         "message_path_correlationKey": "$.key",
         "message_path_variables": "$.payload",
-        "message_path_timeToLive": "$.ttl"
+        "message_path_timeToLive": "$.ttl",
+        "mongoDB_logging": true // Gibt an ob alle Daten die über diesen Connector gehgen protokolliert werden sollen.
       }
     ]
   },
