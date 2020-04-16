@@ -171,7 +171,7 @@ Kafka ist in unserer Architektur der zentrale Kommunikation-Kanal zwischen Zeebe
 Kafka Connect führt sogenannte Konnektoren aus, welche die eigentliche Kommunikation mit dem Drittsystem übernehmen.
 Es gibt bereits viele Konnektoren, die genutzt werden können.
 Kafka Connect macht es uns wesentlich einfacher eine Verbindung zwischen Kafka und Zeebe
-herzustellen.
+herzustellen.(TODO: Den Satz streichen? Ist so irgendwie so ein empfinden? ~lgehr)
 _________________________________
 
 
