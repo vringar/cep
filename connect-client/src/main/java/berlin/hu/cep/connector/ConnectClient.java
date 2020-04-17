@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -80,9 +81,9 @@ public class ConnectClient
     /**
      * Deploys the <strong>Kafka Connect</strong> according to {@link sink_configs the sink configurations} and {@link source_configs the source configurations}
      *
-     * @throws Exception if somethings goes wrong //TODO: Exception specification
+     * @throws JsonProcessingExeption If one ZeebeConfig Object can not be parsed to Json.
      * */
-    public void deploy() throws Exception {
+    public void deploy() throws JsonProcessingException  {
         ObjectMapper oj = new ObjectMapper();
 
         //Deploy sink_configs
@@ -127,9 +128,9 @@ public class ConnectClient
     /**
      * Deletes previously deployed <strong>Kafka Connect</strong> configurations.
      *
-     * @throws Exception if something goes wrong //TODO: Exception specification
+     * @throws JsonProcessingExeption If one ZeebeConfig Object can not be parsed to Json.
      * */
-    public void delete() throws Exception
+    public void delete() throws JsonProcessingException
     {
         for(ZeebeSinkConfig sink_config : sink_configs){
             delete(sink_config.getName(), get_connector_url());
