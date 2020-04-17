@@ -15,13 +15,13 @@ import java.util.List;
 
 /**
  * A class which holds several <strong>Kafka Connect</strong> configurations, for connection to <strong>Zeebe</strong>.
- * <p>An instance of the class is designed to be initialized through a json-file with the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> readValue() methode from the Jackson package</a>.</p>
+ * <p>An instance of the class is designed to be initialized through a json-file with the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> readValue() method from the Jackson package</a>.</p>
  * <p>
  * One ConnectClient holds the needed urls of the systems which should be configured
  * and can configure as many Zeebesink and -source endpoints as needed.
  * </p><p>
  * Optional the class can also configure a mongoDB instance to log all I/O on a given Zeebesink or -source endpoint.</p>
- * The configuration can be deployed with the {@link #deploy() deploy() methode} and deleted with the {@link #delete() delete() methode}.
+ * The configuration can be deployed with the {@link #deploy() deploy() method} and deleted with the {@link #delete() delete() method}.
  *
  * @author Lukas Gehring
  * @author Leon Haussknecht
@@ -45,13 +45,13 @@ public class ConnectClient
     private List<ZeebeSinkConfig> sink_configs;
 
     /**
-     * Constructor for the class {@link ConnectClient}, suitable for creation with <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> Jacksons readValue() methode</a>.
+     * Constructor for the class {@link ConnectClient}, suitable for creation with <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.5/com/fasterxml/jackson/databind/ObjectMapper.html#readValue(byte[],%20java.lang.Class)"> Jacksons readValue() method</a>.
      *
      * @param connector_host the hostname on which <strong>Kafka Connect</strong> runs.
      * @param connector_port the port on which <strong>Kafka Connect</strong> runs.
      * @param mongoDB_url the url on which <strong>MongoDB</strong> runs, null otherwise. For e.g. "mongodb://mongo:27017"
      * @param mongoDB_database the name of the database in which mongoDB should log, null otherwise.
-     * @param zeebe_client_broker_contactPoint the contactpoint for the <strong>Zeebe</strong>broker.
+     * @param zeebe_client_broker_contactPoint the contactpoint for the <strong>Zeebe</strong> broker.
      * @param source_configs A list of {@link ZeebeSourceConfig configuration for Zeebe as source}.
      * @param sink_configs A list of {@link ZeebeSinkConfig configuration for Zeebe as sink}.
      * */

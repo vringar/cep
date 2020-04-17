@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A class to configure a <em>Zeebe Sink Connector</em> with sane defaults.
- * <p>The connector is designed to get complex events from a running <strong>Siddhi</strong>instace</p>.
+ * <p>The connector is designed to get complex events from a running <strong>Siddhi</strong> instace</p>.
  * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Sink Connetor</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent to this sink connector.</p>
- *<p> An object of this class can be converted to a properties file for the <em>Zeebe Sink Connector</em> in json with the<a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
+ *<p> An object of this class can be converted to a properties file for the <em>Zeebe Sink Connector</em> in json with the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
  *
  * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Kafka Connect connector for Zeebe</a>
  * @author Lukas Gehring
@@ -29,14 +29,14 @@ public class ZeebeSinkConfig extends ZeebeConfig
 
     /**
      * Constructor for ZeebeSinkConfig.
-     * Note that since this class has some assumptions not all configuration properties provided by the official <em>Zeebe Sink Connector</em> can be set here.
+     * Note that since this class makes some assumptions not all configuration properties provided by the official <em>Zeebe Sink Connector</em> can be set here.
      * @param name name of the connector
-     * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong>database.
+     * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong> database.
      * @param message_path_messageName JSONPath query to use to extract the message name from the record.
      * @param message_path_correlationKey JSONPath query to use to extract the correlation key from the record.
      * @param message_path_variables JSONPath query to use to extract the variables from the record.
      * @param message_path_timeToLive JSONPath query to use to extract the time to live from the record.
-     * @param topics The <strong>Kakfa</strong>topic the sink connector listens to.
+     * @param topics The <strong>Kakfa</strong> topic the sink connector listens to.
      */
     @JsonCreator
     public ZeebeSinkConfig(

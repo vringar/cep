@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 
 /**
  * An abstract class for <strong>Kafka Connect</strong> configurations.
- * <p>As a attribute of an @{@link berlin.hu.cep.connector.ConnectorPostObject ConnectorPostObject} it can be send to a <strong>Kafka Connect</strong>instance
+ * <p>As an attribute of a @{@link berlin.hu.cep.connector.ConnectorPostObject ConnectorPostObject} it can be send to a <strong>Kafka Connect</strong>instance
  * via a POST-methode of the <strong>Kafka Connect</strong>-REST-API.</p>
  *
  * @author Lukas Gehring
@@ -25,7 +25,7 @@ public abstract class ConnectorConfig
     private boolean value_converter_schemas_enable = false;
 
     /**
-     * The Constructor of the ConnectoConfig Class.
+     * The Constructor of the ConnectorConfig Class.
      * @param connector_class The name of the connectorclass where the <strong>Kafka Connect</strong> connector is implemented.
      */
     public ConnectorConfig(String connector_class) {

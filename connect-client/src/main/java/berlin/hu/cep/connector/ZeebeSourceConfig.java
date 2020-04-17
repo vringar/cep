@@ -7,9 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * A class to configure a <em>Zeebe Source Connector</em> with sane defaults.
- * <p>The connector is designed to send simple events to a <strong>Siddhi</strong>instace for further processing.</p>
- * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Source Connetor</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent from this source connector.</p>
- *<p> An object of this class can be converted to a properties file for the <em>Zeebe Source Connector</em> in json with the<a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
+ * <p>The connector is designed to send simple events to a <strong>Siddhi</strong> instance for further processing.</p>
+ * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Source Connector</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent from this source connector.</p>
+ *<p> An object of this class can be converted into a properties json file for the <em>Zeebe Source Connector</em> via the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
  *
  * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Kafka Connect connector for Zeebe</a>
  * @author Lukas Gehring
@@ -30,11 +30,11 @@ public class ZeebeSourceConfig extends ZeebeConfig
 
     /**
      * Constructor for ZeebeSourceConfig.
-     * Note that since this class has some assumptions not all configuration properties provided by the official <em>Zeebe Source Connector</em> can be set here.
+     * Note that since this class makes some assumptions not all configuration properties provided by the official <em>Zeebe Source Connector</em> can be set here.
      * @param name name of the connector.
-     * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong>database.
+     * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong> database.
      * @param job_types a comma-separated list of job types that should be consumed by the connector
-     * @param job_header_topics the custom service task header which specifies to which <strong>Kafka</strong>topics the message should be published to.
+     * @param job_header_topics the custom service task header which specifies to which <strong>Kafka</strong> topics the message should be published to.
      */
     @JsonCreator
     public ZeebeSourceConfig(
