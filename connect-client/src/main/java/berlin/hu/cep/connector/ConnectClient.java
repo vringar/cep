@@ -1,5 +1,7 @@
 package berlin.hu.cep.connector;
 
+import java.lang.NullPointerException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -81,9 +83,12 @@ public class ConnectClient
     /**
      * Deploys the <strong>Kafka Connect</strong> according to {@link sink_configs the sink configurations} and {@link source_configs the source configurations}
      *
-     * @throws JsonProcessingExeption If one ZeebeConfig Object can not be parsed to Json.
+     * @throws JsonProcessingException If one ZeebeConfig Object can not be parsed to Json.
+     * @throws NullPointerException If MongoDB_logging is enabled but no mongoDB parameters are given in the configuration file.
      * */
-    public void deploy() throws JsonProcessingException  {
+    public void deploy()
+            throws JsonProcessingException, NullPointerException
+    {
         ObjectMapper oj = new ObjectMapper();
 
         //Deploy sink_configs
@@ -92,16 +97,8 @@ public class ConnectClient
             ConnectorPostObject config = new ConnectorPostObject(sink_config.getName(), sink_config);
             String config_json = oj.writeValueAsString(config);
             post(config_json, get_connector_url());
-            if(sink_config.isMongoDB_logging()){ //TODO: Check if mongoDB_url and _database is set
-                MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
-                        mongoDB_url,
-                        sink_config.getTopics(),
-                        mongoDB_database,
-                        config.getName());
-                ConnectorPostObject post_object = new ConnectorPostObject(config.getName() + "-LOGGING", mongo_config);
-                String json = oj.writeValueAsString(post_object);
-                post(json, get_connector_url());
-            }
+
+            enableMongoDB_logging(sink_config, oj);
         }
 
         //Deploy source configs
@@ -112,25 +109,41 @@ public class ConnectClient
             String config_json = oj.writeValueAsString(config);
             post(config_json, get_connector_url());
 
-            if(source_config.isMongoDB_logging()){ //TODO: Check if mongoDB_url and _database is set
-                MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
-                        mongoDB_url,
-                        source_config.getJob_header_topics(),
-                        mongoDB_database,
-                        config.getName());
-                ConnectorPostObject post_object = new ConnectorPostObject(config.getName() + "-LOGGING", mongo_config);
+            enableMongoDB_logging(source_config, oj);
+        }
+    }
+
+    private void enableMongoDB_logging(ZeebeConfig config, ObjectMapper oj)
+            throws NullPointerException, JsonProcessingException
+    {
+        if(config.isMongoDB_logging()){
+            if(mongoDB_url == null || mongoDB_database == null){
+                NullPointerException ex = new NullPointerException("mongoDB parameters are not set and mongoDB_logging is enabled.\nPlease set mongoDB_url and mongoDB_database.");
+                throw ex;
+            }
+            String topic;
+            if(config.getClass() == ZeebeSinkConfig.class){
+                topic = ((ZeebeSinkConfig)config).getTopics();
+            }else{
+                topic = ((ZeebeSourceConfig)config).getJob_header_topics();
+            }
+            MongoDBConnectConfig mongo_config = new MongoDBConnectConfig(
+                    mongoDB_url,
+                    topic,
+                    mongoDB_database,
+                    config.getName());
+                ConnectorPostObject post_object = new ConnectorPostObject(
+                        config.getName() + "-LOGGING",
+                        mongo_config);
                 String json = oj.writeValueAsString(post_object);
                 post(json, get_connector_url());
-            }
         }
     }
 
     /**
      * Deletes previously deployed <strong>Kafka Connect</strong> configurations.
-     *
-     * @throws JsonProcessingExeption If one ZeebeConfig Object can not be parsed to Json.
      * */
-    public void delete() throws JsonProcessingException
+    public void delete()
     {
         for(ZeebeSinkConfig sink_config : sink_configs){
             delete(sink_config.getName(), get_connector_url());
