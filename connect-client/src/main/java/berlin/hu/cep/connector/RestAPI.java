@@ -4,13 +4,15 @@ import retrofit2.Call;
 import retrofit2.http.*;
 
 /**
- * This interface gets used by Retrofit to provide an HTTP interface (https://square.github.io/retrofit/)
+ * An interace to be used by Retrofit to provide an HTTP interface
  *
  * @author Lukas Gehring
  * @author Leon Haussknecht
  * @author Maurice Lindner
  * @author Jost Hermann Triller
  * @author Stefan Zabka
+ *
+ * @see <a href="https://square.github.io/retrofit/">The Retrofit dokumentaition</a>
  *
  */
 public interface RestAPI {
