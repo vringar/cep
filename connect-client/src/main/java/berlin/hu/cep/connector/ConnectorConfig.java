@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
  * @author Jost Hermann Triller
  * @author Stefan Zabka
  *
- * TODO see Kafka Connect doku...
+ * @see <a href="https://docs.confluent.io/current/connect/index.html">Kafka Connect Dokumentation</a>
  * */
 public abstract class ConnectorConfig
 {
