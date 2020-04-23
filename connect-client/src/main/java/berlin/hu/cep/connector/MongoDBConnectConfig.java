@@ -6,21 +6,39 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 import java.util.LinkedList;
 
+/**
+ * A class to configure a <em>MongoDBSinkConnector</em> for <strong>Kafka Connect</strong> with sane defaults.
+ * <p>The configuration is designed so that all communication between a <strong>Siddhi</strong>-
+ * and a <strong>Zeebe</strong>-instance is logged into a <strong>MongoDB</strong> database.</p>
+ * An object of this class can be converted into a properties json file for the <em>MongoDB Kafka Sink Connector</em> via the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.
+ *
+ * @see <a href="https://docs.mongodb.com/kafka-connector/current/kafka-sink/">MongoDB Kafka Sink Connector Documentation</a>
+ * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
+ * @author Jost Hermann Triller
+ * @author Stefan Zabka
+ * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MongoDBConnectConfig extends ConnectorConfig
 {
-    private String connector_class = "com.mongodb.kafka.connect.MongoSinkConnector";
-    private int tasks_max = 1;
     private String connection_uri = "mongodb://mongo:27017";
     private List<String> topics;
     private String database;
     private String collection;
-    private String key_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean key_converter_schemas_enable = false;
-    private String value_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean value_converter_schemas_enable = false;
 
+    /**
+     * Constructor for MongoDBConnectConfig.
+     * Note that since this class makes some assumptions not all configuration properties provided by the official <em>MongoDBSinkConnector</em> can be set here.
+     *
+     * @see <a href="https://docs.mongodb.com/kafka-connector/current/kafka-sink-properties/">MongoDB Kafka Sink Connector Properties</a>
+     * @param connection_uri The uri of the <strong>MongoDB</strong>-instance.
+     * @param topic The <strong>Kafka</strong> topic which should be logged in the database.
+     * @param database The name of the database the sink writes to
+     * @param collection MongoDB collection name to write to.
+     * */
     public MongoDBConnectConfig(String connection_uri, String topic,String database, String collection){
+        super("com.mongodb.kafka.connect.MongoSinkConnector");
         this.topics = new LinkedList<String>();
         this.topics.add(topic);
         this.database = database;
@@ -28,20 +46,17 @@ public class MongoDBConnectConfig extends ConnectorConfig
         this.collection = collection;
     }
 
+    /**
+     * The Topic is the <strong>Kafka</strong> topic name the connector listens to.
+     * This class is designed to listen to only one topic. The attribute is only named topics to be compatible with the official sink connector.
+     * @return the <strong>Kafka</strong> topic the connector listens to.*/
     public String getTopics(){
         return String.join(",", topics);
     }
 
     /**
-     * @return the connector_class
-     */
-    @JsonGetter("connector.class")
-    public String getConnector_class() {
-        return connector_class;
-    }
-
-    /**
-     * @return the connection_uri
+     * The uri of the <strong>MongoDB</strong> instance.
+     * @return <strong>MongoDB</strong>uri to connect to.
      */
     @JsonGetter("connection.uri")
     public String getConnection_uri() {
@@ -49,56 +64,20 @@ public class MongoDBConnectConfig extends ConnectorConfig
     }
 
     /**
-     * @return the tasks_max
-     */
-    @JsonGetter("tasks.max")
-    public int getTasks_max() {
-        return tasks_max;
-    }
-
-    /**
-     * @return the database
+     * A <strong>MongoDB</strong>instace has several databases it manages.
+     * Databases hold collection of (BSON)documents.
+     * @return The name of the <strong>MongoDB</strong>database to log to.
      */
     public String getDatabase() {
         return database;
     }
 
     /**
-     * @return the collection
+     * One <strong>MongoDB</strong> database holds several collections.
+     * A collections holds several (BSON)documents.
+     * @return <strong>MongoDB</strong>collection to database to log to.
      */
     public String getCollection() {
         return collection;
-    }
-
-    /**
-     * @return the key_converter
-     */
-    @JsonGetter("key.converter")
-    public String getKey_converter() {
-        return key_converter;
-    }
-
-    /**
-     * @return the value_converter
-     */
-    @JsonGetter("value.converter")
-    public String getValue_converter() {
-        return value_converter;
-    }
-
-    /**
-     * @return the key_converter_schemas_enable
-     */
-    @JsonGetter("key.converter.schemas.enable")
-    public boolean isKey_converter_schemas_enable() {
-        return key_converter_schemas_enable;
-    }
-
-    /**
-     * @return the value_converter_schemas_enable
-     */
-    @JsonGetter("value.converter.schemas.enable")
-    public boolean isValue_converter_schemas_enable() {
-        return value_converter_schemas_enable;
     }
 }

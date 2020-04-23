@@ -2,30 +2,42 @@ package berlin.hu.cep.connector;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+/**
+ * A class to configure a <em>Zeebe Sink Connector</em> with sane defaults.
+ * <p>The connector is designed to get complex events from a running <strong>Siddhi</strong> instace</p>.
+ * <p>It also holds the attribute 'mongoDB_logging' which is not a configuration property of a <em>Zeebe Sink Connetor</em>. 'mongoDB_logging' is a way to enable logging in a <strong>MongoDB</strong> for the events which are sent to this sink connector.</p>
+ *<p> An object of this class can be converted to a properties file for the <em>Zeebe Sink Connector</em> in json with the <a href="https://fasterxml.github.io/jackson-databind/javadoc/2.7/com/fasterxml/jackson/databind/ObjectMapper.html">Jackson ObjectMapper</a>.</p>
+ *
+ * @see <a href="https://github.com/zeebe-io/kafka-connect-zeebe">Kafka Connect connector for Zeebe</a>
+ * @author Lukas Gehring
+ * @author Leon Haussknecht
+ * @author Maurice Lindner
+ * @author Jost Hermann Triller
+ * @author Stefan Zabka
+ * */
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ZeebeSinkConfig extends ConnectorConfig
+public class ZeebeSinkConfig extends ZeebeConfig
 {
-    private String name;
-    private String connector_class = "io.zeebe.kafka.connect.ZeebeSinkConnector";
-    private int tasks_max = 1;
-    private String key_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean key_converter_schemas_enable = false;
-    private String value_converter = "org.apache.kafka.connect.json.JsonConverter";
-    private boolean value_converter_schemas_enable = false;
     private String topics;
-    private int zeebe_client_requestTimeout = 10000;
-    private boolean zeebe_client_security_plaintext = true;
     private String message_path_messageName;
     private String message_path_correlationKey;
     private String message_path_variables;
     private String message_path_timeToLive;
-    private boolean mongoDB_logging = false;
-    private String zeebe_client_broker_contactPoint;
 
+    /**
+     * Constructor for ZeebeSinkConfig.
+     * Note that since this class makes some assumptions not all configuration properties provided by the official <em>Zeebe Sink Connector</em> can be set here.
+     * @param name name of the connector
+     * @param mongoDB_logging Enables logging of all related events into a <strong>MongDB</strong> database.
+     * @param message_path_messageName JSONPath query to use to extract the message name from the record.
+     * @param message_path_correlationKey JSONPath query to use to extract the correlation key from the record.
+     * @param message_path_variables JSONPath query to use to extract the variables from the record.
+     * @param message_path_timeToLive JSONPath query to use to extract the time to live from the record.
+     * @param topics The <strong>Kakfa</strong> topic the sink connector listens to.
+     */
     @JsonCreator
     public ZeebeSinkConfig(
             @JsonProperty("name") String name,
@@ -35,96 +47,56 @@ public class ZeebeSinkConfig extends ConnectorConfig
             @JsonProperty("message_path_variables") String message_path_variables,
             @JsonProperty("message_path_timeToLive") String message_path_timeToLive,
             @JsonProperty("topics") String topics) {
-        this.name = name;
-        this.mongoDB_logging = mongoDB_logging==null?false:mongoDB_logging;
-        this.message_path_messageName = message_path_messageName;
+        super("io.zeebe.kafka.connect.ZeebeSinkConnector", name, mongoDB_logging);
+        this.message_path_messageName= message_path_messageName;
         this.message_path_correlationKey = message_path_correlationKey;
         this.message_path_variables = message_path_variables;
         this.message_path_timeToLive = message_path_timeToLive;
         this.topics = topics;
     }
 
-    @JsonGetter("connector.class")
-    public String getConnector_class() {
-        return connector_class;
-    }
-
-    @JsonGetter("tasks.max")
-    public int getTasks_max() {
-        return tasks_max;
-    }
-
-    @JsonGetter("key.converter")
-    public String getKey_converter() {
-        return key_converter;
-    }
-
-    @JsonGetter("key.converter.schemas.enable")
-    public boolean isKey_converter_schemas_enable() {
-        return key_converter_schemas_enable;
-    }
-
-    @JsonGetter("value.converter")
-    public String getValue_converter() {
-        return value_converter;
-    }
-
-    @JsonGetter("value.converter.schemas.enable")
-    public boolean isValue_converter_schemas_enable() {
-        return value_converter_schemas_enable;
-    }
-
+    /**
+     * Returns the topic the sink connector listens to.
+     * Note that it is normally just one topic. The attribute is named topics to be compatible with the official <em>Zeebe Sink Connector</em>
+     * @return The name of the topic
+     */
     public String getTopics() {
         return topics;
     }
 
-    @JsonGetter("zeebe.client.broker.contactPoint")
-    public String getZeebe_client_broker_contactPoint() {
-        return zeebe_client_broker_contactPoint;
-    }
-
-    public void setZeebe_client_broker_contactPoint(String zeebe_client_broker_contactPoint) {
-        this.zeebe_client_broker_contactPoint = zeebe_client_broker_contactPoint;
-    }
-
-    @JsonGetter("zeebe.client.requestTimeout")
-    public int getZeebe_client_requestTimeout() {
-        return zeebe_client_requestTimeout;
-    }
-
-    @JsonGetter("zeebe.client.security.plaintext")
-    public boolean isZeebe_client_security_plaintext() {
-        return zeebe_client_security_plaintext;
-    }
-
+    /**
+     * JSONPath query to use to extract the message name from the record
+     * @return JSONPath query for the message name
+     */
     @JsonGetter("message.path.messageName")
     public String getMessage_path_messageName() {
         return message_path_messageName;
     }
 
+    /**
+     * JSONPath query to use to extract the correlation key from the record
+     * @return JSONPath query for the correlation key
+     */
     @JsonGetter("message.path.correlationKey")
     public String getMessage_path_correlationKey() {
         return message_path_correlationKey;
     }
 
+    /**
+     * JSONPath query to use to extract the variables from the record
+     * @return JSONPath query for variables from the record
+     */
     @JsonGetter("message.path.variables")
     public String getMessage_path_variables() {
         return message_path_variables;
     }
 
+    /**
+     * JSONPath query to use to extract the time to live from the record
+     * @return JSONPath query for time to live
+     */
     @JsonGetter("message.path.timeToLive")
     public String getMessage_path_timeToLive() {
         return message_path_timeToLive;
     }
-
-    @JsonIgnore
-    public boolean isMongoDB_logging() {
-        return mongoDB_logging;
-    }
-
-    @JsonIgnore
-    public String getName() {
-        return name;
-    }
-
 }

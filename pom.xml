@@ -14,6 +14,6 @@
     <module>deployer</module>
   </modules>
   <properties>
-    <maven.compiler.release>13</maven.compiler.release>
+    <maven.compiler.release>11</maven.compiler.release>
   </properties>
 </project>
