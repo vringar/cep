@@ -2,7 +2,7 @@
  * Classes which are needed to build the deployer CLI-Application.
  *
  * The deployer application is used deploy and delete configurations to <strong>Siddhi</strong> and <strong>Kafka Connect</strong> instances.
- * It uses the libaries found in the berlin.hu.cep.siddhi and berlin.hu.cep.connector packages.
+ * It uses the libraries found in the berlin.hu.cep.siddhi and berlin.hu.cep.connector packages.
  *
  *
  * @author Lukas Gehring
