@@ -1,4 +1,4 @@
-package berlin.hu.cep;
+package berlin.hu.cep.deployer;
 
 import static org.junit.Assert.assertTrue;
 

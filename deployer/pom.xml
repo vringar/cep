@@ -75,7 +75,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>berlin.hu.cep.Deployer</mainClass>
+              <mainClass>berlin.hu.cep.deployer.Deployer</mainClass>
             </manifest>
           </archive>
         </configuration>
@@ -86,7 +86,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>berlin.hu.cep.Deployer</mainClass>
+              <mainClass>berlin.hu.cep.deployer.Deployer</mainClass>
             </manifest>
           </archive>
           <descriptorRefs>
