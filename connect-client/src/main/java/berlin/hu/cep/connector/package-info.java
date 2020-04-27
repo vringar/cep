@@ -17,8 +17,8 @@
  * @author Maurice Lindner
  * @author Jost Hermann Triller
  * @author Stefan Zabka
- * @see <a href="kafka.apache.org">Apache Kafka</a>
- * @see <a href="zeebe.io">Zeebe</a>
- * @see <a href="siddhi.io">Siddhi</a>
+ * @see <a href="https://kafka.apache.org">Apache Kafka</a>
+ * @see <a href="https://zeebe.io">Zeebe</a>
+ * @see <a href="https://siddhi.io">Siddhi</a>
  * */
 package berlin.hu.cep.connector;
