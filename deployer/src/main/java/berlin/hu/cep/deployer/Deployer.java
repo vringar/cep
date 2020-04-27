@@ -1,16 +1,34 @@
-package berlin.hu.cep;
+package berlin.hu.cep.deployer;
 
 import berlin.hu.cep.connector.*;
 import berlin.hu.cep.siddhi.*;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+/**
+  * The main Class of the package used to run the cli application.
+  *
+  * */
 public class Deployer
 {
-    public static void main( String[] args ) throws Exception {
+    /**
+     * Main method of the project.
+     *
+     * The method resembles a simple CLI application.
+     * It takes a general purpose configuration file and splits it into smaller configuration
+     * files for the subsystems.
+     *
+     * @param args Command line arguments for the application: [options] [file]<br>
+     *  -deploy to deploy configurations<br>
+     *  -remove to remove configurations<br>
+     *  [file] path to the configuration file
+     * */
+    public static void main( String[] args ) {
 
         if(args.length >= 2)
         {
