@@ -23,3 +23,5 @@ buildNumber.properties
 .settings
 *.iml
 .idea
+.factorypath
+.vscode

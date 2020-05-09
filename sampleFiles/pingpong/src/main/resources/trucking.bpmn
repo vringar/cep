@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_0q8q79l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.7.0">
+  <bpmn:process id="trucking" name="Trucking" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1smz8tt</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="ServiceTask_0blqnn5" name="Load truck">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="load-truck" />
+        <zeebe:ioMapping>
+          <zeebe:output source="transportID" target="transportID" />
+          <zeebe:output source="truckInformation" target="truckInformation" />
+          <zeebe:output source="load" target="load" />
+          <zeebe:output source="destination" target="destination" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1smz8tt</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_16a7ay5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1smz8tt" sourceRef="StartEvent_1" targetRef="ServiceTask_0blqnn5" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_04vww3f">
+      <bpmn:incoming>SequenceFlow_16a7ay5</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1g0oewr</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1va30e2</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_16a7ay5" sourceRef="ServiceTask_0blqnn5" targetRef="ExclusiveGateway_04vww3f" />
+    <bpmn:serviceTask id="ServiceTask_0tyvsha" name="Drive transport leg">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="drive-transport-leg" />
+        <zeebe:ioMapping>
+          <zeebe:input source="transportID" target="transportID" />
+          <zeebe:input source="truckInformation" target="truckInformation" />
+          <zeebe:input source="load" target="load" />
+          <zeebe:input source="destination" target="destination" />
+          <zeebe:output source="transportID" target="transportID" />
+          <zeebe:output source="truckInformation" target="truckInformation" />
+          <zeebe:output source="load" target="load" />
+          <zeebe:output source="destination" target="destination" />
+          <zeebe:output source="stop" target="stop" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1va30e2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0sbqvq5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1va30e2" sourceRef="ExclusiveGateway_04vww3f" targetRef="ServiceTask_0tyvsha" />
+    <bpmn:exclusiveGateway id="ExclusiveGateway_04fecwe" default="SequenceFlow_0vj8dzm">
+      <bpmn:incoming>SequenceFlow_0sbqvq5</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1g0oewr</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0vj8dzm</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_0sbqvq5" sourceRef="ServiceTask_0tyvsha" targetRef="ExclusiveGateway_04fecwe" />
+    <bpmn:sequenceFlow id="SequenceFlow_1g0oewr" name="Destination not reached" sourceRef="ExclusiveGateway_04fecwe" targetRef="ExclusiveGateway_04vww3f">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">stop!=destination</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="ServiceTask_1u4b8z9" name="Unload truck">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="unload-truck" />
+        <zeebe:ioMapping>
+          <zeebe:input source="load" target="load" />
+          <zeebe:input source="truckInformation" target="truckInformation" />
+          <zeebe:input source="transportID" target="transportID" />
+          <zeebe:output source="load" target="load" />
+          <zeebe:output source="truckInformation" target="truckInformation" />
+          <zeebe:output source="transportID" target="transportID" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0vj8dzm</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1mk81i8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0vj8dzm" name="Destination reached" sourceRef="ExclusiveGateway_04fecwe" targetRef="ServiceTask_1u4b8z9" />
+    <bpmn:endEvent id="EndEvent_1hopzje">
+      <bpmn:incoming>SequenceFlow_1mk81i8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1mk81i8" sourceRef="ServiceTask_1u4b8z9" targetRef="EndEvent_1hopzje" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="trucking">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="172" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0blqnn5_di" bpmnElement="ServiceTask_0blqnn5">
+        <dc:Bounds x="270" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1smz8tt_di" bpmnElement="SequenceFlow_1smz8tt">
+        <di:waypoint x="208" y="177" />
+        <di:waypoint x="270" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_04vww3f_di" bpmnElement="ExclusiveGateway_04vww3f" isMarkerVisible="true">
+        <dc:Bounds x="425" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_16a7ay5_di" bpmnElement="SequenceFlow_16a7ay5">
+        <di:waypoint x="370" y="177" />
+        <di:waypoint x="425" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0tyvsha_di" bpmnElement="ServiceTask_0tyvsha">
+        <dc:Bounds x="530" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1va30e2_di" bpmnElement="SequenceFlow_1va30e2">
+        <di:waypoint x="475" y="177" />
+        <di:waypoint x="530" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_04fecwe_di" bpmnElement="ExclusiveGateway_04fecwe" isMarkerVisible="true">
+        <dc:Bounds x="685" y="152" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0sbqvq5_di" bpmnElement="SequenceFlow_0sbqvq5">
+        <di:waypoint x="630" y="177" />
+        <di:waypoint x="685" y="177" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1g0oewr_di" bpmnElement="SequenceFlow_1g0oewr">
+        <di:waypoint x="710" y="152" />
+        <di:waypoint x="710" y="70" />
+        <di:waypoint x="450" y="70" />
+        <di:waypoint x="450" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="543" y="56" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1u4b8z9_di" bpmnElement="ServiceTask_1u4b8z9">
+        <dc:Bounds x="890" y="137" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0vj8dzm_di" bpmnElement="SequenceFlow_0vj8dzm">
+        <di:waypoint x="735" y="177" />
+        <di:waypoint x="890" y="177" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="785" y="163" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_1hopzje_di" bpmnElement="EndEvent_1hopzje">
+        <dc:Bounds x="1022" y="159" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1mk81i8_di" bpmnElement="SequenceFlow_1mk81i8">
+        <di:waypoint x="990" y="177" />
+        <di:waypoint x="1022" y="177" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
