@@ -17,13 +17,14 @@ public class MainClass {
     try (Scanner s = new Scanner(System.in)) {
       boolean run = true;
       while (run) {
-        switch (s.next().trim()) {
+        String value = s.next().trim();
+        switch (value) {
           case "quit":
             run = false;
             break;
           default:
             Map<String, Object> params = new HashMap<>();
-            params.put("key", Integer.parseInt(args[0]));
+            params.put("key", Integer.parseInt(value));
             connector.createWorkflowInstance("ping-pong", params);
             break;
         }
