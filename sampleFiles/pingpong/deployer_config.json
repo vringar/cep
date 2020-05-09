@@ -27,6 +27,6 @@
   "siddhi_config":
   {
     "hostaddress": "https://localhost:9443/",
-    "siddhi-files": ["sampleFiles/pingpong/KafkaTest.siddhi"]
+    "siddhi-files": ["KafkaTest.siddhi"]
   }
 }
