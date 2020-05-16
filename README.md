@@ -1,4 +1,35 @@
-# Meta
+# Meta <!-- omit in toc -->
+
+* [Checkliste Dokumentation](#checkliste-dokumentation)
+    * [Tutorial](#tutorial)
+    * [Architektur](#architektur)
+      * [Apache Kafka](#apache-kafka)
+      * [Kafka-Siddhi-Verbindung](#kafka-siddhi-verbindung)
+      * [Kafka-Zeebe-Verbindung](#kafka-zeebe-verbindung)
+      * [Siddhi Konfiguration](#siddhi-konfiguration)
+      * [Deployer](#deployer)
+    * [Verwendete Technologien/Ansätze](#verwendete-technologienansätze)
+      * [Docker](#docker)
+      * [Java](#java)
+      * [Apache Maven](#apache-maven)
+      * [JSON/JavaScript Object Notation](#jsonjavascript-object-notation)
+      * [Retrofit](#retrofit)
+      * [Jackson](#jackson)
+      * [Zeebe](#zeebe)
+      * [Siddhi](#siddhi)
+      * [Apache Kafka](#apache-kafka-1)
+      * [Kafka Connect](#kafka-connect)
+      * [MongoDB](#mongodb)
+    * [Schnittstellen](#schnittstellen)
+      * [Deployer](#deployer-1)
+      * [Connect-Client](#connect-client)
+      * [Siddhi-Client](#siddhi-client)
+    * [Javadoc](#javadoc)
+    * [Offene Punkte/Einschränkungen/Systemgrenzen](#offene-punkteeinschränkungensystemgrenzen)
+      * [Statische Konfiguration](#statische-konfiguration)
+      * [Zeebe Kafka Record Exporter](#zeebe-kafka-record-exporter)
+      * [Deployer Verbesserungen (TODO: Zu komplexe Satzstrukturen)](#deployer-verbesserungen-todo-zu-komplexe-satzstrukturen)
+      * [Ausführliches Testen](#ausführliches-testen)
 
 Hier können wir alle möglichen MetaKram sammeln bevor wir alles in einzelne Repos aufsplitten.
 
@@ -14,7 +45,6 @@ _________________________________
      - [ ] Funktionalität von Zeebe um CEP erweitern
      - [ ] Diese Funktionalität einfach nutzbar zu machen
      - [ ] Cloud Native
-
 Workflow-Engines sind Softwaresysteme zur Überwachung und Steuerung von Prozessen basierend
 auf einem Modell. Während man in der Vergangenheit häufig nur einfache Geschäftsprozesse über
 Workflows abgewickelt hat, werden nach und nach die Anforderungen in Punkten wie
@@ -54,9 +84,37 @@ _________________________________
      - [ ] Python (für Beispiel)
 
 #### Tutorial
-Zum Kompilieren des Deployers muss im Monorepo Ordner `mvn clean package` ausgeführt werden.
-Zum Starten muss `java -jar deployer/target/deployer-0.0-SNAPSHOT-jar-with-dependencies.jar
--deploy deployer/deployer_config.json` ausgeführt werden.
+
+Um dem Tutorial zu folgen sollten zuerst alle benötigten Technologien installiert sein.
+Diese sind:
+ - Ein JavaSDK Version >11
+ - Docker und Docker-Compose
+  
+Wenn diese installiert sind, sollte man nun folgendes tun:
+1. Komplilieren des Deployers
+   1. `mvn package` im Wurzelverzeichnis des Repositories ausführen
+   2. Prüfen das `deployer/target/deployer-1.0-jar-with-dependencies.jar` existiert
+2. Kompilieren des Clients
+   1. `mvn package` in `sampleFiles/pingpong` ausführen
+   2. Prüfen das in `sampleFiles/pingpong/target/pingpong-client-1.0-SNAPSHOT-jar-with-dependencies.jar` existiert
+3. `docker-compose up -d` im Verzeichnis `infra` ausführen
+4. Ein bisschen warten
+5. Den Deployer im Wurzelverzeichnis ausführen, so das `sampleFiles/pingpong/deployer_config.json` deployed wird.  
+      Dies geschieht mit dem Befehl
+      `java -jar deployer/target/deployer-1.0-jar-with-dependencies.jar -deploy sampleFiles/pingpong/deployer_config.json`
+6. Den Client starten  
+     Dies geschieht mit dem Befehl
+     `java -jar sampleFiles/pingpong/target/pingpong-client-1.0-SNAPSHOT-jar-with-dependencies.jar`
+
+Nun ist alles fertig konfiguriert und wenn der Nutzer nun eine Nummer im Client eingibt, so wird
+diese über Kafka an Siddhi geleitet, wo sie dann gezählt und wieder zurück geschickt wird.
+Der Nutzer wird darüber in einer Lognachricht im Client informiert.
+
+Gleichzeitig kann man jeden Schritt auch über das Controll Center für Kafka und in Camunda Operate für den Workflow beobachten.
+   
+
+
+
 _________________________________
 Für 2.):
 _________________________________
