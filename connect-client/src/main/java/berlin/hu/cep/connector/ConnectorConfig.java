@@ -19,9 +19,9 @@ public abstract class ConnectorConfig
 {
     private String connector_class;
     private int tasks_max = 1;
-    private String key_converter = "org.apache.kafka.connect.json.JsonConverter";
+    protected String key_converter = "org.apache.kafka.connect.json.JsonConverter";
     private boolean key_converter_schemas_enable = false;
-    private String value_converter = "org.apache.kafka.connect.json.JsonConverter";
+    protected String value_converter = "org.apache.kafka.connect.json.JsonConverter";
     private boolean value_converter_schemas_enable = false;
 
     /**
