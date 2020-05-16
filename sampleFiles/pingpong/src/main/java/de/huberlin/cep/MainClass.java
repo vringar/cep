@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.zeebe.client.api.worker.JobWorker;
 
 public class MainClass {
 
   public static void main(String[] args) {
+    Logger logger = LoggerFactory.getLogger(MainClass.class);
     Connector connector = new Connector();
     System.out.println("Connected : \n" + connector.getClient().getConfiguration());
     connector.deployWorkflow("process.bpmn");
@@ -20,12 +24,14 @@ public class MainClass {
         String value = s.next().trim();
         switch (value) {
           case "quit":
+          case "exit":
             run = false;
             break;
           default:
             Map<String, Object> params = new HashMap<>();
             params.put("key", Integer.parseInt(value));
             connector.createWorkflowInstance("ping-pong", params);
+            logger.info("Created workflow with id {}", value);
             break;
         }
       }

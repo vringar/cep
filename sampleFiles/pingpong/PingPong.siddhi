@@ -8,7 +8,7 @@
         threading.option='single.thread',
         group.id='group',
         bootstrap.servers='kafka:29092',
-        @map(type='json', fail.on.missing.attribute="false" , @attributes(key = "$.variablesAsMap.key") ))
+        @map(type='json', @attributes(key = "$.variablesAsMap.key") ))
 
 define stream InputStream(key int);
 

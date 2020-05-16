@@ -55,7 +55,7 @@ public class Connector {
         
         final Map<String,Object> variables = activatedJob.getVariablesAsMap();
 
-        logger.info("Got response from Siddhi for key {}. This was the {} time a message was sent", variables.get("id"), variables.get("count"));
+        logger.info("Got response from Siddhi for key {}. This was the {} time a message was sent", variables.get("key"), variables.get("count"));
         
         
         jobClient.newCompleteCommand(activatedJob.getKey())
