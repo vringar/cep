@@ -167,7 +167,7 @@ public class ConnectClient
                 .build();
 
         RestAPI restAPI = retrofit.create(RestAPI.class);
-
+        System.out.println(json);
         try {
             Call<String> call = restAPI.postJson(json);
             Response<String> response = call.execute();

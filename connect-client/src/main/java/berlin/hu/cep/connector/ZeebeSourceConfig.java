@@ -43,6 +43,8 @@ public class ZeebeSourceConfig extends ZeebeConfig
             @JsonProperty("job_header_topics") String job_header_topics,
             @JsonProperty("mongoDB_logging") Boolean mongoDB_logging) {
         super("io.zeebe.kafka.connect.ZeebeSourceConnector", name, mongoDB_logging);
+        this.key_converter = "org.apache.kafka.connect.storage.StringConverter";
+        this.value_converter = "org.apache.kafka.connect.storage.StringConverter";
         this.job_types = job_types;
         this.job_header_topics = job_header_topics;
     }

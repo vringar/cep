@@ -1,0 +1,28 @@
+@App:name('PingPong')
+
+@App:description('This Application is designed to enable a round trip from Zeebe to Siddhi and back')
+
+@source(type='kafka',
+        topic.list='toSiddhi',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+        @map(type='json', @attributes(key = "$.variablesAsMap.key") ))
+
+define stream InputStream(key int);
+
+@sink(type='kafka',
+        topic='toZeebe',
+        partition.no.list='0',
+        threading.option='single.thread',
+        group.id='group',
+        bootstrap.servers='kafka:29092',
+        @map(type='json', @payload("""{"key": {{key}}, "name": "pong", "payload": { "count": {{count}} }, "ttl": 400 }""")))
+define stream OutputStream(key int, count long);
+
+@info(name='roundtripQuery')
+from InputStream
+select key, count() as count
+insert into OutputStream;
+
