@@ -27,6 +27,6 @@
   "siddhi_config":
   {
     "hostaddress": "https://localhost:9443/",
-    "siddhi-files": ["sampleFiles/pingpong/PingPong.siddhi"]
+    "siddhi-files": ["pingpongExample/PingPong.siddhi"]
   }
 }
