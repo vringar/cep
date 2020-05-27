@@ -1,18 +1,24 @@
 {
   "connector_config":
   {
-    "kafka_host": "http://localhost:8083/",
+    "connector_host": "localhost",
+    "connector_port": "8083",
     "zeebe_client_broker_contactPoint": "zeebe:26500",
     "source_configs":
     [
+      {
+        "name": "ping",
+        "job_types": "ping",
+        "job_header_topics": "topic"
+      }
     ],
     "sink_configs":
     [
       {
-        "name": "roomUpdates",
-        "topics": "roomUpdates",
+        "name": "pong",
+        "topics": "toZeebe",
         "message_path_messageName": "$.name",
-        "message_path_correlationKey": "$.payload.roomID",
+        "message_path_correlationKey": "$.key",
         "message_path_variables": "$.payload",
         "message_path_timeToLive": "$.ttl"
       }
@@ -21,6 +27,6 @@
   "siddhi_config":
   {
     "hostaddress": "https://localhost:9443/",
-    "siddhi-files": ["sampleFiles/secretRoom/SecurityEvents.siddhi"]
+    "siddhi-files": ["pingpongExample/PingPong.siddhi"]
   }
 }
