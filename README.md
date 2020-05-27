@@ -46,7 +46,7 @@ mvn clean package
 Bei Erfolg sollte nun `sampleFiles/pingpong/target/pingpong-client-1.0-SNAPSHOT-jar-with-dependencies.jar` existieren.
 * `docker-compose up -d` im Verzeichnis `infra` ausführen (eventuell muss `sudo` benutzt werden)
 * Ein bisschen warten bis alle Systeme hochgefahren sind, 5 Minuten sollten ausreichen.
-* Den Deployer im Wurzelverzeichnis ausführen, so das `sampleFiles/pingpong/deployer_config.json` deployed wird:
+* Den Deployer im Wurzelverzeichnis ausführen, so dass `sampleFiles/pingpong/deployer_config.json` deployed wird:
 ```
 java -jar deployer/target/deployer-1.0-jar-with-dependencies.jar -deploy sampleFiles/pingpong/deployer_config.json
 ```
