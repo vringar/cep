@@ -1,1 +1,1 @@
-Documentation can be found in the [wiki](https://gitlab.informatik.hu-berlin.de/complexeventprocessing/monorepo/-/wikis/home).
+Eine ausführliche Dokumentation befindet sich im [wiki](https://gitlab.informatik.hu-berlin.de/complexeventprocessing/monorepo/-/wikis/home).
