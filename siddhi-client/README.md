@@ -1,10 +1,10 @@
 # Siddhi Client
 
-Writing a Siddi Java client, using the REST-Api
+Writing a Siddhi Java client, using the REST-API
 
-JSON FORMAT 
+JSON FORMAT:
 
-
+```json
 {
   "siddhi": {
     "host": "localhost:9443/",
@@ -16,3 +16,4 @@ JSON FORMAT
             ] 
   }
 }
+```

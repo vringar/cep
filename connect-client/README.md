@@ -1,1 +1,3 @@
-Documentation can be found [here](https://gitlab.informatik.hu-berlin.de/complexeventprocessing/monorepo/-/wikis/06.%20Schnittstellen#62-connect-client)
+# Connect Client
+
+Documentation can be found [here](../doc/06-Schnittstellen.md#62-connect-client)
